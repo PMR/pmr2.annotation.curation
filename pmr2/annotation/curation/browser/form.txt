@@ -1,0 +1,31 @@
+=================
+Curation Overview
+=================
+
+The curation module provides site managers the ability to curate (grade)
+the contents within the sites using curation flags.  Curation flags are
+essentially tags with values that can be selected, with an optional
+method to determine the value to assign to the item to be curated.
+
+As users generally do not write code that can be executed on the server
+(for the automated curation to happen), specialized modules will provide
+the automatic curation flags.  For those, the reviewer would check the
+applicable flags to assign to the item, then the curation process would
+select the intended value to apply to that item for that flag.
+
+The other part allows manual curation, where the reviewer would use the
+curation flags defined by the site managers to apply to the curated
+items.  This may prove to be the more common usage.
+
+-----
+Forms
+-----
+
+We should already have a curation utility defined already, which can be
+queried like so:
+
+    >>> from zope.component import getUtility
+    >>> from pmr2.annotation.curation.interfaces import ICurationTool
+    >>> tool = getUtility(ICurationTool)
+    >>> tool
+    <pmr2.annotation.curation.tool.CurationToolAnnotation ...>

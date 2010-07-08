@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="pmr2_annotation_curation_tool" version="0.1"
+               handler="pmr2.annotation.curation.setuphandlers.importVarious"
+               title="PMR2 Curation Tool">
+  </import-step>
+</import-steps>
