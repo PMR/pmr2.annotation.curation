@@ -1,3 +1,4 @@
+MANIFEST.in
 README.txt
 setup.cfg
 setup.py
@@ -8,7 +9,14 @@ pmr2.annotation.curation.egg-info/dependency_links.txt
 pmr2.annotation.curation.egg-info/entry_points.txt
 pmr2.annotation.curation.egg-info/namespace_packages.txt
 pmr2.annotation.curation.egg-info/not-zip-safe
+pmr2.annotation.curation.egg-info/paster_plugins.txt
 pmr2.annotation.curation.egg-info/requires.txt
 pmr2.annotation.curation.egg-info/top_level.txt
 pmr2/annotation/__init__.py
 pmr2/annotation/curation/__init__.py
+pmr2/annotation/curation/interfaces.py
+pmr2/annotation/curation/schema/__init__.py
+pmr2/annotation/curation/schema/field.py
+pmr2/annotation/curation/schema/interfaces.py
+pmr2/annotation/curation/tests/__init__.py
+pmr2/annotation/curation/tests/test_doctest.py
