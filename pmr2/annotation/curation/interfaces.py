@@ -90,6 +90,11 @@ class ICurationTool(zope.interface.Interface):
         Returns the curation flag with the given name.
         """
 
+    def listFlags():
+        """\
+        Returns a list of all available flags.
+        """
+
     def setFlag(name, flag):
         """\
         Sets a custom curation flag using the name.

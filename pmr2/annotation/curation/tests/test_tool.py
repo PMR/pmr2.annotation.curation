@@ -16,6 +16,14 @@ class MockCurationFlag:
     def __init__(self, title):
         self.title = title
 
+    def __repr__(self):
+        return '<Flag: %s>' % self.title
+
+    def __eq__(self, other):
+        # needed because the test flags are recreated per test but the
+        # tool has a persistent store.
+        return self.__repr__() == other.__repr__()
+
 
 class CurationToolTestCase(TestCase):
 
@@ -39,6 +47,8 @@ class CurationToolTestCase(TestCase):
 
         # the tool we test
         self.tool = CurationToolAnnotation()
+        # reset value due to persistence
+        self.tool.custom_flags = {}
 
     def tearDown(self):
         sm = zope.component.getSiteManager()
@@ -76,6 +86,37 @@ class CurationToolTestCase(TestCase):
         self.tool.setFlag('flag2', None)
         flag2 = self.tool.getFlag('flag2')
         self.assertEqual(flag2, self.flags['flag2'])
+
+    def test_100_list_flags_default(self):
+        result = self.tool.listFlags()
+        self.assertEqual(result, self.default_flags)
+
+    def test_101_list_flags_custom(self):
+        answer = {}
+        answer.update(self.default_flags)
+        # add flag (3)
+        self.tool.setFlag('flag3', self.flags['flag3'])
+        answer['flag3'] = self.flags['flag3']
+        result = self.tool.listFlags()
+        self.assertEqual(result, answer)
+        # another flag (4)
+        self.tool.setFlag('flag4', self.flags['flag4'])
+        answer['flag4'] = self.flags['flag4']
+        result = self.tool.listFlags()
+        self.assertEqual(result, answer)
+        # remove flag (3)
+        self.tool.setFlag('flag3', None)
+        del answer['flag3']
+        result = self.tool.listFlags()
+        self.assertEqual(result, answer)
+
+    def test_102_list_flags_overwrite(self):
+        self.tool.setFlag('flag1', self.flags['flag0'])
+        answer = {}
+        answer.update(self.default_flags)
+        answer['flag1'] = self.flags['flag0']
+        result = self.tool.listFlags()
+        self.assertEqual(result, answer)
 
 
 def test_suite():

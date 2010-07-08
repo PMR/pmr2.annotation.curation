@@ -37,6 +37,11 @@ class CurationToolAnnotation(Persistent, Contained):
         flag = zope.component.queryUtility(ICurationFlag, name=name)
         return flag
 
+    def listFlags(self):
+        flags = dict(zope.component.getUtilitiesFor(ICurationFlag))
+        flags.update(self.custom_flags.items())
+        return flags
+
     def setFlag(self, name, flag):
         # query flag first to not overwrite product-defined flags?
         if flag is None and name in self.custom_flags:
