@@ -49,6 +49,7 @@ class CurationToolTestCase(TestCase):
         self.tool = CurationToolAnnotation()
         # reset value due to persistence
         self.tool.custom_flags = {}
+        self.tool.inactive_flags = []
 
     def tearDown(self):
         sm = zope.component.getSiteManager()
@@ -116,6 +117,14 @@ class CurationToolTestCase(TestCase):
         answer.update(self.default_flags)
         answer['flag1'] = self.flags['flag0']
         result = self.tool.listFlags()
+        self.assertEqual(result, answer)
+
+    def test_103_list_flags_active(self):
+        self.tool.inactive_flags = ['flag1']
+        answer = {}
+        answer.update(self.default_flags)
+        del answer['flag1']
+        result = self.tool.listActiveFlags()
         self.assertEqual(result, answer)
 
 

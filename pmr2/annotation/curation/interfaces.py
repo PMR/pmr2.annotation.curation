@@ -90,6 +90,16 @@ class ICurationTool(zope.interface.Interface):
         Returns the curation flag with the given name.
         """
 
+    def isActive(name):
+        """\
+        Tests whether the flag with the given name is active.
+        """
+
+    def listActiveFlags():
+        """\
+        Returns a list of flags active flags that are available for use.
+        """
+
     def listFlags():
         """\
         Returns a list of all available flags.

@@ -37,6 +37,13 @@ class CurationToolAnnotation(Persistent, Contained):
         flag = zope.component.queryUtility(ICurationFlag, name=name)
         return flag
 
+    def listActiveFlags(self):
+        flags = self.listFlags()
+        for flag in self.inactive_flags:
+            if flag in flags:
+                del flags[flag]
+        return flags
+
     def listFlags(self):
         flags = dict(zope.component.getUtilitiesFor(ICurationFlag))
         flags.update(self.custom_flags.items())
@@ -48,5 +55,8 @@ class CurationToolAnnotation(Persistent, Contained):
             del self.custom_flags[name]
             return
         self.custom_flags[name] = flag
+
+    def isActive(self, name):
+        return name not in self.inactive_flags
 
 CurationTool = factory(CurationToolAnnotation)
