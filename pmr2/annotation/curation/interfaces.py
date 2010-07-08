@@ -25,7 +25,7 @@ class ICurationFlag(zope.interface.Interface):
             title=u'Key'
         ),
         value_type=zope.schema.TextLine(
-            title=u'Value'
+            title=u'Value',
             description=u'Describes what this value is',
         ),
         description=u'Curation values that can be assigned to this flag; '
@@ -38,7 +38,7 @@ class ICurationFlag(zope.interface.Interface):
         """
 
 
-class ICuration(zope.interface.Interface):
+class ICurationNote(zope.interface.Interface):
     """\
     The interface for the annotation storing the set of curation values.
     """
@@ -47,3 +47,52 @@ class ICuration(zope.interface.Interface):
         title=u'Values',
         description=u'Flags assigned to this object.',
     )
+
+    reason = zope.schema.Dict(
+        title=u'Reasons',
+        description=u'The reason why the value was set for the flag, '
+                     'identified by the key.',
+        key_type=zope.schema.TextLine(
+            title=u'Key'
+        ),
+        value_type=zope.schema.TextLine(
+            title=u'Value'
+        ),
+    )
+
+
+class ICurationTool(zope.interface.Interface):
+    """\
+    The Curation tool.  Will be a utility that is registered, has an
+    annotation component where custom flags can be stored.  Provides
+    methods to access curation flags.  Provide a way to store flags.
+    """
+
+    custom_flags = zope.schema.Dict(
+        title=u'Custom Flags',
+        description=u'Custom flags defined for this tool',
+        default={},
+        key_type=zope.schema.TextLine(
+            title=u'Key',
+        ),
+        # value_type should be things that implement ICurationFlag.
+    )
+
+    inactive_flags = zope.schema.List(
+        title=u'Inactive Flags',
+        description=u'Flags not available for usage.',
+        required=False,
+        default=[],
+    )
+
+    def getFlag(name):
+        """\
+        Returns the curation flag with the given name.
+        """
+
+    def setFlag(name, flag):
+        """\
+        Sets a custom curation flag using the name.
+
+        None value removes it.
+        """
