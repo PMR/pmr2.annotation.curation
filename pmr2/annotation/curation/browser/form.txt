@@ -36,7 +36,7 @@ The tool stores all the custom flags a site manager may wish to define
 for a site.  There is a form to let them do this.
 ::
 
-    >>> from pmr2.annotation.curation.browser.form import CurationFlagAddForm
+    >>> from pmr2.annotation.curation.browser.form import *
     >>> from z3c.form.testing import TestRequest
     >>> request = TestRequest()
     >>> form = CurationFlagAddForm(self.portal, request)
@@ -63,3 +63,15 @@ As the fields in the form are present, post the creation request.
     u'Flag 1'
     >>> flag.description
     u'Test flag one'
+    >>> request.response.getHeader('Location')
+    'http://nohost/plone/@@manage_curation'
+
+So when the browser is redirected to the manage curation view, the new
+flag should be listed.
+::
+
+    >>> request = TestRequest()
+    >>> form = CurationToolDisplayForm(self.portal, request)
+    >>> result = form()
+    >>> 'Flag 1' in result
+    True

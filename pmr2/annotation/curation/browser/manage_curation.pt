@@ -1,0 +1,4 @@
+<dl tal:repeat="i view/flags">
+  <dt tal:content="i/flag/title"/>
+  <dd tal:content="i/flag/description"/>
+</dl>

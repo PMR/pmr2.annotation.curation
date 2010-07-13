@@ -1,0 +1,25 @@
+<configure 
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="pmr2.app">
+
+  <browser:page
+      for="*"
+      name="manage_curation"
+      class=".form.CurationToolDisplayFormView"
+      permission="cmf.ManagePortal"
+      />
+
+  <!--
+    adapter for the adding view.
+  -->
+
+  <adapter
+      for="Products.Five.browser.adding.ContentAdding
+           *"
+      name="addCuration"
+      factory=".form.CurationFlagAddFormView"
+      provides="z3c.form.interfaces.IAddForm"
+      />
+
+</configure>
