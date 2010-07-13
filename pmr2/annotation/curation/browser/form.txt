@@ -21,11 +21,45 @@ items.  This may prove to be the more common usage.
 Forms
 -----
 
-We should already have a curation utility defined already, which can be
-queried like so:
+We should have a curation utility defined as the test class should have
+initiated the installation of this module; the utility can be queried
+by its interface.
+::
 
     >>> from zope.component import getUtility
     >>> from pmr2.annotation.curation.interfaces import ICurationTool
     >>> tool = getUtility(ICurationTool)
     >>> tool
     <pmr2.annotation.curation.tool.CurationToolAnnotation ...>
+
+The tool stores all the custom flags a site manager may wish to define
+for a site.  There is a form to let them do this.
+::
+
+    >>> from pmr2.annotation.curation.browser.form import CurationFlagAddForm
+    >>> from z3c.form.testing import TestRequest
+    >>> request = TestRequest()
+    >>> form = CurationFlagAddForm(self.portal, request)
+    >>> result = form()
+    >>> 'Title' in result
+    True
+    >>> 'Description' in result
+    True
+
+As the fields in the form are present, post the creation request.
+::
+
+    >>> request = TestRequest(
+    ...     form={
+    ...         'form.widgets.id': u'flag_1',
+    ...         'form.widgets.title': u'Flag 1',
+    ...         'form.widgets.description': u'Test flag one',
+    ...         'form.buttons.add': 1,
+    ...     })
+    >>> form = CurationFlagAddForm(self.portal, request)
+    >>> result = form()
+    >>> flag = tool.getFlag('flag_1')
+    >>> flag.title
+    u'Flag 1'
+    >>> flag.description
+    u'Test flag one'
