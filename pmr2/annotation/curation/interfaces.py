@@ -1,7 +1,7 @@
 import zope.schema
 import zope.interface
 
-from pmr2.annotation.curation.schema import CurationDict
+from pmr2.annotation.curation.schema import CurationDict, CurationFlagDict
 
 
 class ICurationFlag(zope.interface.Interface):
@@ -18,16 +18,8 @@ class ICurationFlag(zope.interface.Interface):
         title=u'Description',
     )
 
-    items = zope.schema.Dict(
+    items = CurationFlagDict(
         title=u'Valid Items',
-        # XXX should this be limited length/character set?
-        key_type=zope.schema.TextLine(
-            title=u'Key'
-        ),
-        value_type=zope.schema.TextLine(
-            title=u'Value',
-            description=u'Describes what this value is',
-        ),
         description=u'Curation values that can be assigned to this flag; '
                      'descriptions of each value can be assigned.',
     )

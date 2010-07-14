@@ -11,3 +11,9 @@ class ICurationDict(zope.schema.interfaces.IDict):
     """\
     Curation dictionary.
     """
+
+
+class ICurationFlagDict(zope.schema.interfaces.IDict):
+    """\
+    Curation flag dictionary.
+    """
