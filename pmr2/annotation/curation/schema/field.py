@@ -28,16 +28,26 @@ class CurationDict(zope.schema.Dict):
         >>> d = CurationDict()
         >>> d.fromUnicode(u'key:value')
         {u'key': [u'value']}
+
         >>> result = d.fromUnicode(u'key:value\\nkey2:type2\\nkey:value2')
         >>> result[u'key']
         [u'value', u'value2']
         >>> result[u'key2']
         [u'type2']
+
+        >>> d.fromUnicode(u'key:value\\nkey2\\nkey3:value3')
+        Traceback (most recent call last):
+        ...
+        InvalidValue: Invalid curation string
         """
 
         result = {}
         for i in u.splitlines():
-            k, v = i.split(u':', 1)
+            lines = i.split(u':', 1)
+            if len(lines) != 2:
+                raise zope.schema.interfaces.InvalidValue(
+                    'Invalid curation string')
+            k, v = lines
             if k not in result:
                 result[k] = []
             result[k].append(v)
