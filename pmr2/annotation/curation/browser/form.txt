@@ -75,3 +75,34 @@ flag should be listed.
     >>> result = form()
     >>> 'Flag 1' in result
     True
+
+To assign the values to the flag, there is an edit form for that.
+::
+
+    >>> flag = tool.getFlag('flag_1')
+    >>> request = TestRequest()
+    >>> form = CurationFlagEditForm(flag, request)
+    >>> result = form()
+
+We can now assign some flags into the flag using the form.
+::
+
+    >>> flag = tool.getFlag('flag_1')
+    >>> request = TestRequest(
+    ...     form={
+    ...         'form.widgets.title': u'Flag 1',
+    ...         'form.widgets.description': u'Test flag one',
+    ...         'form.widgets.items': u'Supported\n'
+    ...                                'Suports feature provided by flag 1.\n'
+    ...                                'Unsupported\n'
+    ...                                'Does not suport feature.\n',
+    ...         'form.buttons.apply': 1,
+    ...     })
+    >>> form = CurationFlagEditForm(flag, request)
+    >>> result = form()
+    >>> answer = {
+    ...     u'Supported': 'Suports feature provided by flag 1.',
+    ...     u'Unsupported': 'Does not suport feature.'
+    ...     }
+    >>> flag.items == answer
+    True

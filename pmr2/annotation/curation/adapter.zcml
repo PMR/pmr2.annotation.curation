@@ -5,4 +5,7 @@
   <!-- Global Configuration -->
   <adapter factory=".tool.CurationTool" />
 
+  <!-- Widget value converters -->
+  <adapter factory=".converter.CurationFlagDictDataConverter"/>
+
 </configure> 

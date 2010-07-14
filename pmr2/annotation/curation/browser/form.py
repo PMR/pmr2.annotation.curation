@@ -60,3 +60,10 @@ class CurationFlagAddForm(z3c.form.form.AddForm):
 
 CurationFlagAddFormView = layout.wrap_form(CurationFlagAddForm,
     label = _(u'Add a Curation Flag'))
+
+
+class CurationFlagEditForm(z3c.form.form.EditForm):
+    fields = z3c.form.field.Fields(ICurationFlag)
+
+CurationFlagEditFormView = layout.wrap_form(CurationFlagEditForm,
+    label = _(u'Edit Curation Flag'))

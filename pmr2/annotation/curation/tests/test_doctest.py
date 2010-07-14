@@ -19,6 +19,11 @@ def test_suite():
             setUp=testing.setUp, tearDown=testing.tearDown
         ),
 
+        doctestunit.DocTestSuite(
+            module='pmr2.annotation.curation.converter',
+            setUp=testing.setUp, tearDown=testing.tearDown
+        ),
+
         ztc.ZopeDocFileSuite(
             'browser/form.txt', package='pmr2.annotation.curation',
             test_class=ptc.FunctionalTestCase,

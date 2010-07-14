@@ -22,4 +22,15 @@
       provides="z3c.form.interfaces.IAddForm"
       />
 
+  <!--
+    Widgets
+  -->
+
+  <adapter
+      for="pmr2.annotation.curation.schema.CurationFlagDict
+           z3c.form.interfaces.IFormLayer"
+      factory=".widget.CurationFlagDictWidgetFactory"
+      provides="z3c.form.interfaces.IFieldWidget"
+      />
+
 </configure>
