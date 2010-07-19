@@ -64,7 +64,7 @@ class ICurationTool(zope.interface.Interface):
         title=u'Custom Flags',
         description=u'Custom flags defined for this tool',
         default={},
-        key_type=zope.schema.TextLine(
+        key_type=zope.schema.DottedName(
             title=u'Key',
         ),
         # value_type should be things that implement ICurationFlag.

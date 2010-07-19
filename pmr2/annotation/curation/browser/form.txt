@@ -64,7 +64,7 @@ As the fields in the form are present, post the creation request.
     >>> flag.description
     u'Test flag one'
     >>> request.response.getHeader('Location')
-    'http://nohost/plone/@@manage_curation'
+    'http://nohost/plone/@@manage-curation'
 
 So when the browser is redirected to the manage curation view, the new
 flag should be listed.
@@ -76,18 +76,22 @@ flag should be listed.
     >>> 'Flag 1' in result
     True
 
-To assign the values to the flag, there is an edit form for that.
+To assign the values to the flag, there is an edit form for that.  We
+need to simulate the traversal as the form implements IPublishTraverse,
+with the flag id appended to the end of the URI.
 ::
 
-    >>> flag = tool.getFlag('flag_1')
     >>> request = TestRequest()
-    >>> form = CurationFlagEditForm(flag, request)
+    >>> form = CurationFlagEditForm(self.portal, request)
+    >>> form.publishTraverse(request, 'flag_1')
+    <pmr2.annotation.curation.browser.form.CurationFlagEditForm ...>
     >>> result = form()
+    >>> 'form.widgets.items' in result
+    True
 
 We can now assign some flags into the flag using the form.
 ::
 
-    >>> flag = tool.getFlag('flag_1')
     >>> request = TestRequest(
     ...     form={
     ...         'form.widgets.title': u'Flag 1',
@@ -98,7 +102,9 @@ We can now assign some flags into the flag using the form.
     ...                                'Does not suport feature.\n',
     ...         'form.buttons.apply': 1,
     ...     })
-    >>> form = CurationFlagEditForm(flag, request)
+    >>> form = CurationFlagEditForm(self.portal, request)
+    >>> form.publishTraverse(request, 'flag_1')
+    <pmr2.annotation.curation.browser.form.CurationFlagEditForm ...>
     >>> result = form()
     >>> answer = {
     ...     u'Supported': 'Suports feature provided by flag 1.',

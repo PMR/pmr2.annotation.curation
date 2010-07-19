@@ -55,6 +55,8 @@ class CurationToolAnnotation(Persistent, Contained):
             del self.custom_flags[name]
             return
         self.custom_flags[name] = flag
+        # XXX to trigger modification commit behavior?
+        self.custom_flags = self.custom_flags
 
     def isActive(self, name):
         return name not in self.inactive_flags

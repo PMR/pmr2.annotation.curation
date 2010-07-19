@@ -11,3 +11,15 @@ class ICurationIdMixin(zope.interface.Interface):
         description=u'The identifier of the object, used for URI.',
         min_dots=0,
     )
+
+
+class ICurationFlagEditForm(zope.interface.Interface):
+    """\
+    Marker interface for the curation flag edit form.
+    """
+
+
+class ICurationToolDisplayForm(zope.interface.Interface):
+    """\
+    Marker interface for the curation flag edit form.
+    """

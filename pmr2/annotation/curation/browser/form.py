@@ -3,15 +3,18 @@ import zope.component
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('pmr2.annotation.curation')
-
+from zope.publisher.interfaces import IPublishTraverse
 from plone.z3cform import layout
 import z3c.form
+from paste.httpexceptions import HTTPNotFound, HTTPFound
 
 from pmr2.annotation.curation.schema.interfaces import *
 from pmr2.annotation.curation.interfaces import ICurationFlag
 from pmr2.annotation.curation.interfaces import ICurationTool
-from pmr2.annotation.curation.browser.interfaces import ICurationIdMixin
 from pmr2.annotation.curation.flag import CurationFlag
+
+from pmr2.annotation.curation.browser.interfaces import *
+from pmr2.annotation.curation.browser.layout import TraverseFormWrapper
 
 
 class CurationToolDisplayForm(z3c.form.form.DisplayForm):
@@ -32,7 +35,7 @@ class CurationToolDisplayForm(z3c.form.form.DisplayForm):
         return self.render()
 
 CurationToolDisplayFormView = layout.wrap_form(CurationToolDisplayForm,
-    label = _(u'Curation Tool Management'))
+    label=_(u'Curation Tool Management'))
 
 
 class CurationFlagAddForm(z3c.form.form.AddForm):
@@ -56,14 +59,40 @@ class CurationFlagAddForm(z3c.form.form.AddForm):
 
     def nextURL(self):
         # assume context is portal root
-        return self.context.absolute_url() + '/@@manage_curation'
+        return self.context.absolute_url() + '/@@manage-curation'
 
 CurationFlagAddFormView = layout.wrap_form(CurationFlagAddForm,
     label = _(u'Add a Curation Flag'))
 
 
 class CurationFlagEditForm(z3c.form.form.EditForm):
+    zope.interface.implements(ICurationFlagEditForm)
     fields = z3c.form.field.Fields(ICurationFlag)
+    flag = None
+
+    def publishTraverse(self, request, name):
+        if self.flag is not None:
+            # we only go down one layer.
+            raise HTTPNotFound()
+        tool = zope.component.getUtility(ICurationTool)
+        self.flag = tool.getFlag(name)
+        if self.flag is None:
+            raise HTTPNotFound()
+        return self
+
+    def getContent(self):
+        return self.flag
+
+    def nextURL(self):
+        # assume context is portal root
+        return self.context.absolute_url() + '/@@manage-curation'
+
+    def update(self):
+        if self.getContent() is None:
+            raise HTTPFound(self.nextURL())
+        return super(CurationFlagEditForm, self).update()
 
 CurationFlagEditFormView = layout.wrap_form(CurationFlagEditForm,
+    __wrapper_class=TraverseFormWrapper,
     label = _(u'Edit Curation Flag'))
+
