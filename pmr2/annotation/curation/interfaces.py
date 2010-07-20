@@ -4,6 +4,14 @@ import zope.interface
 from pmr2.annotation.curation.schema import CurationDict, CurationFlagDict
 
 
+# Interfaces
+
+class ICurationLayer(zope.interface.Interface):
+    """\
+    Marker interface for this product.
+    """
+
+
 class ICurationFlag(zope.interface.Interface):
     """\
     Definition of a curation flag.
@@ -34,6 +42,9 @@ class ICurationNote(zope.interface.Interface):
     """\
     The interface for the annotation storing the set of curation values.
     """
+
+    # TODO in the future we may need a vocabulary to store subsets of 
+    # applicable curation flag for the item this note is attached to.
 
     values = CurationDict(
         title=u'Values',

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<layers>
+    <layer name="pmr2.annotation.curation"
+           interface="pmr2.annotation.curation.interfaces.ICurationLayer" />
+</layers>

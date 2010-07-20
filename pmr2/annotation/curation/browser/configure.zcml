@@ -3,6 +3,8 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="pmr2.app">
 
+  <!-- Standard pages -->
+
   <browser:page
       for="*"
       name="manage-curation"
@@ -46,5 +48,19 @@
       factory=".widget.CurationFlagDictWidgetFactory"
       provides="z3c.form.interfaces.IFieldWidget"
       />
+
+  <!-- bug fix/workarounds -->
+
+  <!--
+    this is for specifically forms with traverse subpaths, where the
+    default supplied with plone.z3cform does not take account of.
+  -->
+  <browser:page
+      name="ploneform-macros"
+      for="*"
+      layer="pmr2.annotation.curation.interfaces.ICurationLayer"
+      class="pmr2.app.browser.layout.Macros"
+      allowed_interface="zope.interface.common.mapping.IItemMapping"
+      permission="zope.Public" />
 
 </configure>

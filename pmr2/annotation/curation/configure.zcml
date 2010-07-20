@@ -4,6 +4,7 @@
     i18n_domain="pmr2.annotation.curation">
 
   <include package="plone.app.z3cform" />
+  <include package="plone.browserlayer" />
   <include package="z3c.table" />
 
   <include package=".browser" />
