@@ -1,12 +1,15 @@
 import zope.interface
 import zope.component
+from zope.app.component.hooks import getSite
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('pmr2.annotation.curation')
 from zope.publisher.interfaces import IPublishTraverse
 from plone.z3cform import layout
+from plone.memoize.view import memoize
 import z3c.form
 from paste.httpexceptions import HTTPNotFound, HTTPFound
+from Products.CMFCore.utils import getToolByName
 
 from pmr2.annotation.curation.schema.interfaces import *
 from pmr2.annotation.curation.interfaces import ICurationFlag
@@ -21,6 +24,10 @@ class CurationToolDisplayForm(z3c.form.form.DisplayForm):
     fields = z3c.form.field.Fields(ICurationTool)
 
     template = ViewPageTemplateFile('manage_curation.pt')
+
+    def portal_url(self):
+        portal = getToolByName(self.context, 'portal_url').getPortalObject()
+        return portal.absolute_url()
 
     def getContent(self):
         return zope.component.getUtility(ICurationTool)
@@ -59,7 +66,10 @@ class CurationFlagAddForm(z3c.form.form.AddForm):
 
     def nextURL(self):
         # assume context is portal root
-        return self.context.absolute_url() + '/@@manage-curation'
+        return '%s/@@manage-edit-curation-flag/%s' % (
+            self.context.absolute_url(),
+            self.data['id']
+        )
 
 CurationFlagAddFormView = layout.wrap_form(CurationFlagAddForm,
     label = _(u'Add a Curation Flag'))
@@ -78,19 +88,26 @@ class CurationFlagEditForm(z3c.form.form.EditForm):
         self.flag = tool.getFlag(name)
         if self.flag is None:
             raise HTTPNotFound()
+        self.flagid = name
         return self
 
     def getContent(self):
         return self.flag
 
-    def nextURL(self):
-        # assume context is portal root
-        return self.context.absolute_url() + '/@@manage-curation'
-
     def update(self):
         if self.getContent() is None:
-            raise HTTPFound(self.nextURL())
+            raise HTTPNotFound()
         return super(CurationFlagEditForm, self).update()
+
+    def applyChanges(self, data):
+        changes = super(CurationFlagEditForm, self).applyChanges(data)
+        # need to wake up tool so whatever magic that commits the 
+        # changes can happen.
+        if changes:
+            tool = zope.component.getUtility(ICurationTool)
+            tool.setFlag(self.flagid, self.getContent())
+        return changes
+
 
 CurationFlagEditFormView = layout.wrap_form(CurationFlagEditForm,
     __wrapper_class=TraverseFormWrapper,

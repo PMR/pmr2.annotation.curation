@@ -25,11 +25,11 @@ class CurationFlagDictDataConverter(z3c.form.converter.BaseDataConverter):
         >>> c.toWidgetValue({})
         u''
         >>> c.toWidgetValue({u'key': u'value'})
-        u'key\\r\\nvalue'
+        u'key\\nvalue'
         >>> r = c.toWidgetValue({u'key': u'value', u'key2': u'value2'})
-        >>> u'key\\r\\nvalue' in r
+        >>> u'key\\nvalue' in r
         True
-        >>> u'key2\\r\\nvalue2' in r
+        >>> u'key2\\nvalue2' in r
         True
         """
 
@@ -38,4 +38,4 @@ class CurationFlagDictDataConverter(z3c.form.converter.BaseDataConverter):
         result = []
         for i in value.iteritems():
             result.extend(i)
-        return u'\r\n'.join(result)
+        return u'\n'.join(result)

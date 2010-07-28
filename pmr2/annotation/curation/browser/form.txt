@@ -64,7 +64,7 @@ As the fields in the form are present, post the creation request.
     >>> flag.description
     u'Test flag one'
     >>> request.response.getHeader('Location')
-    'http://nohost/plone/@@manage-curation'
+    'http://nohost/plone/@@manage-edit-curation-flag/flag_1'
 
 So when the browser is redirected to the manage curation view, the new
 flag should be listed.
@@ -92,14 +92,14 @@ with the flag id appended to the end of the URI.
 We can now assign some flags into the flag using the form.
 ::
 
+    >>> item1 = u'Supported\nSuports feature provided by flag 1.'
+    >>> item2 = u'Unsupported\nDoes not suport feature.'
+    >>> items = '\n'.join([item1, item2])
     >>> request = TestRequest(
     ...     form={
     ...         'form.widgets.title': u'Flag 1',
     ...         'form.widgets.description': u'Test flag one',
-    ...         'form.widgets.items': u'Supported\n'
-    ...                                'Suports feature provided by flag 1.\n'
-    ...                                'Unsupported\n'
-    ...                                'Does not suport feature.\n',
+    ...         'form.widgets.items': items,
     ...         'form.buttons.apply': 1,
     ...     })
     >>> form = CurationFlagEditForm(self.portal, request)
@@ -111,4 +111,18 @@ We can now assign some flags into the flag using the form.
     ...     u'Unsupported': 'Does not suport feature.'
     ...     }
     >>> flag.items == answer
+    True
+
+We also need to make sure the text from the new value is propagated back
+into the form.
+::
+
+    >>> request = TestRequest()
+    >>> form = CurationFlagEditForm(self.portal, request)
+    >>> form.publishTraverse(request, 'flag_1')
+    <pmr2.annotation.curation.browser.form.CurationFlagEditForm ...>
+    >>> result = form()
+    >>> item1 in result
+    True
+    >>> item2 in result
     True

@@ -1,4 +1,12 @@
+<p>
+Below are a list of available curation flags.
+</p>
 <dl tal:repeat="i view/flags">
-  <dt tal:content="i/flag/title"/>
-  <dd tal:content="i/flag/description"/>
+  <dt>
+  <a tal:content="i/flag/title"
+     tal:attributes="href
+     string:${view/portal_url}/@@manage-edit-curation-flag/${i/id}"></a>
+  </dt>
+  <dd tal:content="i/flag/description">
+  </dd>
 </dl>
