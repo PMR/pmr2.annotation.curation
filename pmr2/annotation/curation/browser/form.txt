@@ -126,3 +126,5 @@ into the form.
     True
     >>> item2 in result
     True
+    >>> 'appendCurationFlagDictWidget' in result
+    True

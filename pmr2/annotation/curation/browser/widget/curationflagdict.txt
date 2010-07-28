@@ -1,0 +1,67 @@
+=========================
+Curation Flag Dict Widget
+=========================
+
+The curation flag dictionary widget provides a jQuery based widget that
+allows user to create/destroy valid flag values for a custom curation
+flag, with fallback to a plain textarea input if user's browser has no
+javascript support.  The jQuery based widget takes the value provided by
+the textarea and generates the set of input boxes plus the controls.
+Upon submission, those values will be converted back into the format
+required and be placed into the textarea so it can be submitted.
+
+As for all widgets, the select widget must provide the new ``IWidget``
+interface:
+
+    >>> from zope.interface import verify
+    >>> from z3c.form import interfaces
+    >>> from pmr2.annotation.curation.browser.widget.curationflagdict \
+    ...    import CurationFlagDictWidget
+    ...
+    >>> verify.verifyClass(interfaces.IWidget, CurationFlagDictWidget)
+    True
+
+The widget can be instantiated only using the request:
+
+    >>> from z3c.form.testing import TestRequest
+    >>> request = TestRequest()
+    >>> widget = CurationFlagDictWidget(request)
+
+Before rendering the widget, one has to set the name and id of the widget:
+
+    >>> widget.id = 'widget-id'
+    >>> widget.name = 'widget.name'
+    >>> widget.value = 'Key\nvalue'
+
+We also need to register the template for at least the widget and request:
+
+    >>> import zope.component
+    >>> from zope.pagetemplate.interfaces import IPageTemplate
+    >>> from z3c.form.widget import WidgetTemplateFactory
+    >>> from pmr2.annotation.curation.testing import getPath
+    >>> zope.component.provideAdapter(
+    ...     WidgetTemplateFactory(getPath('widget/curationflagdict_input.pt'), 
+    ...         'text/html'),
+    ...     (None, None, None, None, interfaces.IOrderedSelectWidget),
+    ...     IPageTemplate, name=interfaces.INPUT_MODE)
+
+If we render the widget we get an emtpy widget:
+
+    >>> print widget.render()
+    <div id="curationflagdict-widget-id">
+      <p class="formHelp">
+      ...
+      </p>
+      <textarea id="widget-id" name="widget.name" 
+                class="textarea-widget" cols="60" rows="15">Key
+    value</textarea>
+    </div>
+    <script type="text/javascript">var view_id = 'widget-id';</script>
+    <script type="text/javascript">
+    <!--
+      appendCurationFlagDictWidget(view_id);
+    //-->
+    </script>
+
+The testing of the javascript will have to be done from the browser; I
+plan to implement this using QUnit or similar packages.

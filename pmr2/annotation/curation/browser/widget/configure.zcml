@@ -1,0 +1,8 @@
+<configure 
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="pmr2.annotation.curation">
+
+  <include file="curationflagdict.zcml" />
+
+</configure>

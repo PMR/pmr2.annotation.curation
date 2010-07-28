@@ -1,0 +1,34 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    i18n_domain="z3c.form">
+
+  <class class=".curationflagdict.CurationFlagDictWidget">
+    <require
+        permission="zope.Public"
+        interface=".interfaces.ICurationFlagDictWidget"
+        />
+  </class>
+
+  <adapter
+      for="pmr2.annotation.curation.schema.CurationFlagDict
+           z3c.form.interfaces.IFormLayer"
+      factory=".curationflagdict.CurationFlagDictWidgetFactory"
+      provides="z3c.form.interfaces.IFieldWidget"
+      />
+
+  <z3c:widgetTemplate
+      mode="display"
+      widget="pmr2.annotation.curation.browser.widget.interfaces.ICurationFlagDictWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="curationflagdict_display.pt"
+      />
+
+  <z3c:widgetTemplate
+      mode="input"
+      widget="pmr2.annotation.curation.browser.widget.interfaces.ICurationFlagDictWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="curationflagdict_input.pt"
+      />
+
+</configure>

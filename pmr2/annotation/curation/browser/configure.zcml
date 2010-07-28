@@ -5,6 +5,8 @@
 
   <!-- Standard pages -->
 
+  <include package=".widget" />
+
   <browser:page
       for="*"
       name="manage-curation"
@@ -38,17 +40,6 @@
       provides="z3c.form.interfaces.IAddForm"
       />
 
-  <!--
-    Widgets
-  -->
-
-  <adapter
-      for="pmr2.annotation.curation.schema.CurationFlagDict
-           z3c.form.interfaces.IFormLayer"
-      factory=".widget.CurationFlagDictWidgetFactory"
-      provides="z3c.form.interfaces.IFieldWidget"
-      />
-
   <!-- bug fix/workarounds -->
 
   <!--
@@ -62,5 +53,15 @@
       class="pmr2.app.browser.layout.Macros"
       allowed_interface="zope.interface.common.mapping.IItemMapping"
       permission="zope.Public" />
+
+  <!--
+    Resource declarations.
+  -->
+
+  <browser:resourceDirectory
+      name="pmr2.annotation.curation.js"
+      directory="js"
+      layer="pmr2.annotation.curation.interfaces.ICurationLayer"
+      />
 
 </configure>
