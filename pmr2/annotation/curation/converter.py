@@ -26,16 +26,18 @@ class CurationFlagDictDataConverter(z3c.form.converter.BaseDataConverter):
         u''
         >>> c.toWidgetValue({u'key': u'value'})
         u'key\\nvalue'
-        >>> r = c.toWidgetValue({u'key': u'value', u'key2': u'value2'})
-        >>> u'key\\nvalue' in r
-        True
-        >>> u'key2\\nvalue2' in r
-        True
+        >>> c.toWidgetValue({u'key': u'value', u'key2': u'value2'})
+        u'key\\nvalue\\nkey2\\nvalue2'
+        >>> c.toWidgetValue({u'key': u'value', u'key2': u'value2',
+        ...                  u'1key': u'2value'})
+        u'1key\\n2value\\nkey\\nvalue\\nkey2\\nvalue2'
         """
 
         if not value:
             return u''
+        items = value.items()
+        items.sort()
         result = []
-        for i in value.iteritems():
+        for i in items:
             result.extend(i)
         return u'\n'.join(result)

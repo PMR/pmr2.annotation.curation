@@ -122,9 +122,7 @@ into the form.
     >>> form.publishTraverse(request, 'flag_1')
     <pmr2.annotation.curation.browser.form.CurationFlagEditForm ...>
     >>> result = form()
-    >>> item1 in result
-    True
-    >>> item2 in result
+    >>> items in result
     True
     >>> 'appendCurationFlagDictWidget' in result
     True
