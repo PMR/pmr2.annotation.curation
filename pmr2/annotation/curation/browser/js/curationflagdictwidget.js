@@ -1,3 +1,50 @@
+CurationFlagDictCounter = new function f()
+{
+  this.counter = 0;
+  this.next = function()
+  {
+    result = this.counter;
+    this.counter = this.counter + 1;
+    return result;
+  };
+}
+
+function appendWidgetRow(selector, widgetName, key, value)
+{
+  var i = CurationFlagDictCounter.next()
+  var editor = jq(selector);
+  var rowid = widgetName + '-row' + i
+  editor.append(
+    '<tr id="' + rowid + '">' +
+    '<td>' +
+    '<input type="text" name="' + widgetName + '-key' + i + 
+    '" value="' + key + '"/>' +
+    '</td>' +
+    '<td>' +
+    '<input type="text" name="' + widgetName + '-value' + i + 
+    '" value="' + value + '"/>' +
+    '</td>' +
+    '<td>' +
+    '<button type="button" value="delete" ' +
+    'onclick="javascript:deleteWidgetRow(\'' + selector + ' > #' + rowid + 
+    '\')">delete</button>' +
+    '</td>' +
+    '</tr>' +
+    '');
+  return i;
+}
+
+function deleteWidgetRow(rowid)
+{
+  jq(rowid).remove();
+}
+
+function appendNewWidgetRow(selector, widgetName)
+{
+  row = appendWidgetRow(selector, widgetName, '', '');
+  jq(selector + ' [name=' + widgetName + '-key' + row + ']').select();
+}
+
 function appendCurationFlagDictWidget(widgetId)
 {
   var widgetName = 'curationflagdict';
@@ -12,25 +59,21 @@ function appendCurationFlagDictWidget(widgetId)
   var values = jq(textareaId)[0].innerText.split('\n');
   values.reverse();
 
-  var editor = jq(divId + ' + ' + tag);
-  editor.append('<tr><th>Flag Values</th><th>Description</th></tr>');
+  var structure = jq(divId + ' + ' + tag);
+  structure.append('<thead><tr><th>Flag Values</th><th>Description</th></tr></thead>');
+  structure.append('<tbody></tbody>');
+
+  var selector = divId + ' + ' + tag + ' > tbody';
 
   while (values.length)
   {
     key = values.pop();
     value = values.pop();
     i = values.length;
-    editor.append(
-      '<tr id="' + widgetName + '-row' + i + '">' +
-      '<td>' +
-      '<input type="text" name="' + widgetName + '-key' + i + 
-      '" value="' + key + '"/>' +
-      '</td>' +
-      '<td>' +
-      '<input type="text" name="' + widgetName + '-value' + i + 
-      '" value="' + value + '"/>' +
-      '</td>' +
-      '</tr>' +
-      '');
+    appendWidgetRow(selector, widgetName, key, value);
   }
+  structure.append(
+    '<tfoot><tr><th colspan="2"><button type="button" value="New Flag" ' +
+    'onclick="javascript:appendNewWidgetRow(\'' + selector + '\', \'' + 
+    widgetName + '\')">New Flag</button></th></tr>');
 }
