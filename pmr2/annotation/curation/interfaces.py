@@ -27,7 +27,7 @@ class ICurationFlag(zope.interface.Interface):
     )
 
     items = CurationFlagDict(
-        title=u'Valid Items',
+        title=u'Valid Flag Values',
         description=u'Curation values that can be assigned to this flag; '
                      'descriptions of each value can be assigned.',
     )

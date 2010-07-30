@@ -92,9 +92,9 @@ function appendCurationFlagDictWidget(widgetId)
     }
   }
   structure.append(
-    '<tfoot><tr><th colspan="2"><button type="button" value="New Flag" ' +
-    'onclick="javascript:appendNewWidgetRow(\'' + selector + '\', \'' + 
-    widgetName + '\')">New Flag</button></th></tr>');
+    '<tfoot><tr><th colspan="2"><button type="button" value="New Flag Value"' +
+    ' onclick="javascript:appendNewWidgetRow(\'' + selector + '\', \'' + 
+    widgetName + '\')">New Flag Value</button></th></tr>');
   jq(textareaId).parents('form').bind(
     'submit', function f() {calcCurationFlagDictWidget(widgetId)});
 }
