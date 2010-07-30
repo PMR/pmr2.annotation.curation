@@ -58,9 +58,7 @@ function calcCurationFlagDictWidget(widgetId)
   for (var i = 0; i < inputs.length; i++) {
     results = results + inputs[i].value + '\n';
   }
-
-  jq('#' + widgetName).value = results;
-  alert(jq('#' + widgetName).value);
+  jq('#' + widgetId).val(results);
 }
 
 function appendCurationFlagDictWidget(widgetId)
@@ -75,7 +73,7 @@ function appendCurationFlagDictWidget(widgetId)
   curationDiv.css('display', 'none');
 
   var textareaId = '#' + widgetId;
-  var values = jq(textareaId)[0].innerText.split('\n');
+  var values = jq(textareaId).val().split('\n');
   values.reverse();
 
   var structure = jq(divId + ' + ' + tag);
@@ -87,9 +85,11 @@ function appendCurationFlagDictWidget(widgetId)
 
   while (values.length) {
     key = values.pop();
-    value = values.pop();
-    i = values.length;
-    appendWidgetRow(selector, widgetName, key, value);
+    value = values.pop() || '';
+    if (key) {
+      // as key cannot be null.
+      appendWidgetRow(selector, widgetName, key, value);
+    }
   }
   structure.append(
     '<tfoot><tr><th colspan="2"><button type="button" value="New Flag" ' +
