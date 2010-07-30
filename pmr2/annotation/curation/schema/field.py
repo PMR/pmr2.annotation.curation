@@ -101,6 +101,17 @@ class CurationFlagDict(zope.schema.Dict):
         >>> a = {u'key': u'', u'key2': u'type2', u'key3': 'value3'}
         >>> r == a
         True
+
+        >>> r = d.fromUnicode(u'key\\n\\nkey2\\ntype2\\n\\nvalue3')
+        >>> a = {u'key': u'', u'key2': u'type2'}
+        >>> r == a
+        True
+
+        >>> r = d.fromUnicode(u'key\\n\\n\\n\\nkey2\\ntype2')
+        >>> a = {u'key': u'', u'key2': u'type2'}
+        >>> r == a
+        True
+
         """
 
         result = {}
@@ -109,5 +120,6 @@ class CurationFlagDict(zope.schema.Dict):
         while lines:
             key = lines.pop()
             value = lines and lines.pop() or u''
-            result[key] = value
+            if key:
+                result[key] = value
         return result
