@@ -12,6 +12,7 @@ required and be placed into the textarea so it can be submitted.
 
 As for all widgets, the select widget must provide the new ``IWidget``
 interface:
+::
 
     >>> from zope.interface import verify
     >>> from z3c.form import interfaces
@@ -22,18 +23,21 @@ interface:
     True
 
 The widget can be instantiated only using the request:
+::
 
     >>> from z3c.form.testing import TestRequest
     >>> request = TestRequest()
     >>> widget = CurationFlagDictWidget(request)
 
 Before rendering the widget, one has to set the name and id of the widget:
+::
 
     >>> widget.id = 'widget-id'
     >>> widget.name = 'widget.name'
     >>> widget.value = 'Key\nvalue'
 
 We also need to register the template for at least the widget and request:
+::
 
     >>> import zope.component
     >>> from zope.pagetemplate.interfaces import IPageTemplate
@@ -46,6 +50,7 @@ We also need to register the template for at least the widget and request:
     ...     IPageTemplate, name=interfaces.INPUT_MODE)
 
 If we render the widget we get an emtpy widget:
+::
 
     >>> print widget.render()
     <div id="curationflagdict-widget-id">

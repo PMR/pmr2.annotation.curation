@@ -1,7 +1,11 @@
 import zope.schema
 import zope.interface
 
-from pmr2.annotation.curation.schema import CurationDict, CurationFlagDict
+from pmr2.annotation.curation.schema.interfaces import ICurationEntry
+
+from pmr2.annotation.curation.schema import CurationDict
+from pmr2.annotation.curation.schema import CurationEntryList
+from pmr2.annotation.curation.schema import CurationFlagDict
 
 
 # Interfaces
@@ -38,6 +42,32 @@ class ICurationFlag(zope.interface.Interface):
         """
 
 
+class ICurationEntry(zope.interface.Interface):
+    """\
+    A curation flag entry for the curation note
+    """
+
+    id = zope.schema.TextLine(
+        title=u'Id',
+        description=u'The identifier of the curation flag.',
+    )
+
+    selected = zope.schema.List(
+        title=u'Selected',
+        description=u'Values of this curation flag assigned to the object.',
+        #vocabulary=This is going to be fun...,
+        value_type=zope.schema.TextLine(title=u'Values',),
+    )
+
+    #values = zope.schema.List(
+    #    title=u'Values',
+    #    description=u'Values of this curation flag assigned to the object.',
+    #    #vocabulary=This is going to be fun...,
+    #    value_type=zope.schema.TextLine(title=u'Values',),
+    #)
+
+
+
 class ICurationNote(zope.interface.Interface):
     """\
     The interface for the annotation storing the set of curation values.
@@ -46,22 +76,31 @@ class ICurationNote(zope.interface.Interface):
     # TODO in the future we may need a vocabulary to store subsets of 
     # applicable curation flag for the item this note is attached to.
 
-    values = CurationDict(
+    values = zope.schema.List(
         title=u'Values',
         description=u'Flags assigned to this object.',
+        value_type=zope.schema.Object(
+            title=u'Curation Entry',
+            schema=ICurationEntry,
+        )
     )
 
-    reason = zope.schema.Dict(
-        title=u'Reasons',
-        description=u'The reason why the value was set for the flag, '
-                     'identified by the key.',
-        key_type=zope.schema.TextLine(
-            title=u'Key'
-        ),
-        value_type=zope.schema.TextLine(
-            title=u'Value'
-        ),
-    )
+    #values = CurationEntryList(
+    #    title=u'Values',
+    #    description=u'Flags assigned to this object.',
+    #)
+
+    #reason = zope.schema.Dict(
+    #    title=u'Reasons',
+    #    description=u'The reason why the value was set for the flag, '
+    #                 'identified by the key.',
+    #    key_type=zope.schema.TextLine(
+    #        title=u'Key'
+    #    ),
+    #    value_type=zope.schema.TextLine(
+    #        title=u'Value'
+    #    ),
+    #)
 
 
 class ICurationTool(zope.interface.Interface):

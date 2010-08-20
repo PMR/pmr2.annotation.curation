@@ -10,6 +10,7 @@
   <include package=".browser" />
 
   <include file="adapter.zcml" />
+  <include file="annotator.zcml" />
   <include file="profiles.zcml" />
 
 </configure>

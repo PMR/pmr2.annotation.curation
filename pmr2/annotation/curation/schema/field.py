@@ -1,8 +1,29 @@
 import zope.interface
 import zope.schema
 
+from pmr2.annotation.curation.schema.interfaces import ICurationEntry
+from pmr2.annotation.curation.schema.interfaces import ICurationEntryList
+
 from pmr2.annotation.curation.schema.interfaces import ICurationDict
 from pmr2.annotation.curation.schema.interfaces import ICurationFlagDict
+
+
+class CurationEntryList(zope.schema.List):
+    """\
+    See ICurationEntryList.
+    """
+
+    zope.interface.implements(ICurationEntryList)
+
+    def __init__(self, **kw):
+        value_type = zope.schema.List(
+            title=u'Flags',
+            value_type=zope.schema.Object(
+                title=u'Curation Entry',
+                schema=ICurationEntry,
+            )
+        )
+        super(CurationEntryList, self).__init__(value_type, **kw)
 
 
 class CurationDict(zope.schema.Dict):

@@ -21,7 +21,8 @@ from pmr2.annotation.curation.browser.layout import TraverseFormWrapper
 
 
 class CurationToolDisplayForm(z3c.form.form.DisplayForm):
-    fields = z3c.form.field.Fields(ICurationTool)
+    fields = z3c.form.field.Fields(ICurationTool).omit(
+        'custom_flags', 'inactive_flags')
 
     template = ViewPageTemplateFile('manage_curation.pt')
 
