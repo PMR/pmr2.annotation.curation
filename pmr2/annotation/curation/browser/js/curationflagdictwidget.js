@@ -49,11 +49,10 @@ function calcCurationFlagDictWidget(widgetId)
 {
   // FIXME define this inside some sort of object to avoid repetition
   var widgetName = 'curationflagdict';
-  var tag = 'table';
   var divId = '#' + widgetName + '-' + widgetId;
-  var selector = divId + ' + ' + tag + ' > tbody input';
+  var selector = divId + '-anchor';  // '-editor';
 
-  var inputs = jq(selector);
+  var inputs = jq(selector + ' input');
   results = '';
   for (var i = 0; i < inputs.length; i++) {
     results = results + inputs[i].value + '\n';
@@ -65,23 +64,21 @@ function appendCurationFlagDictWidget(widgetId)
 {
   // FIXME define this inside some sort of object to avoid repetition
   var widgetName = 'curationflagdict';
-  var tag = 'table';
   var divId = '#' + widgetName + '-' + widgetId;
+  var selector = divId + '-anchor';  // '-editor';
 
   var curationDiv = jq(divId);
-  curationDiv.after('<' + tag + '></' + tag + '>');
+  curationDiv.after('<table></table>');
   curationDiv.css('display', 'none');
 
   var textareaId = '#' + widgetId;
   var values = jq(textareaId).val().split('\n');
   values.reverse();
 
-  var structure = jq(divId + ' + ' + tag);
+  var structure = jq(divId + ' + table');
   structure.append('<thead><tr><th>Flag Values</th>' +
                    '<th>Description</th></tr></thead>');
-  structure.append('<tbody></tbody>');
-
-  var selector = divId + ' + ' + tag + ' > tbody';
+  structure.append('<tbody id="' + selector.substr(1) + '"></tbody>');
 
   while (values.length) {
     key = values.pop();
