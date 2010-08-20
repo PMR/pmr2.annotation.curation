@@ -15,13 +15,16 @@ class CurationDict(zope.schema.Dict):
         zope.schema.interfaces.IFromUnicode,
     )
 
-    key_type = zope.schema.TextLine(
-        title=u'Key',
-    )
-    value_type = zope.schema.List(
-        title=u'Value',
-        value_type=zope.schema.TextLine(title=u'Values',),
-    )
+    def __init__(self, **kw):
+        key_type = zope.schema.TextLine(
+            title=u'Key',
+        )
+        value_type = zope.schema.List(
+            title=u'Values',
+            value_type=zope.schema.TextLine(title=u'Values',),
+        )
+        super(CurationDict, self).__init__(key_type, value_type, **kw)
+
 
     def fromUnicode(self, u):
         """\
@@ -67,14 +70,16 @@ class CurationFlagDict(zope.schema.Dict):
         zope.schema.interfaces.IFromUnicode,
     )
 
-    key_type = zope.schema.TextLine(
-        title=u'Key',
-        description=u'A valid value for this curation flag',
-    )
-    value_type = zope.schema.TextLine(
-        title=u'Value',
-        description=u'Definition of this value.',
-    )
+    def __init__(self, **kw):
+        key_type = zope.schema.TextLine(
+            title=u'Key',
+            description=u'A valid value for this curation flag',
+        )
+        value_type = zope.schema.TextLine(
+            title=u'Value',
+            description=u'Definition of this value.',
+        )
+        super(CurationFlagDict, self).__init__(key_type, value_type, **kw)
 
     def fromUnicode(self, u):
         """\
