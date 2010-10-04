@@ -6,7 +6,7 @@ import zope.schema
 import zope.interface
 import zope.component
 
-from pmr2.app.content.interfaces import IWorkspaceContainer
+from pmr2.app.workspace.interfaces import IWorkspaceContainer
 from pmr2.app.interfaces import IPMR2GlobalSettings, IPMR2PluggableSettings
 from pmr2.app.factory import NamedUtilBase
 
