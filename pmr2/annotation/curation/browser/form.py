@@ -1,14 +1,18 @@
 import zope.interface
 import zope.component
+
 from zope.app.component.hooks import getSite
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+from zope.publisher.interfaces import IPublishTraverse
+from zope.publisher.interfaces import NotFound
+
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('pmr2.annotation.curation')
-from zope.publisher.interfaces import IPublishTraverse
+
 from plone.z3cform import layout
 from plone.memoize.view import memoize
 import z3c.form
-from paste.httpexceptions import HTTPNotFound, HTTPFound
+
 from Products.CMFCore.utils import getToolByName
 
 from pmr2.annotation.curation.schema.interfaces import *
@@ -84,11 +88,11 @@ class CurationFlagEditForm(z3c.form.form.EditForm):
     def publishTraverse(self, request, name):
         if self.flag is not None:
             # we only go down one layer.
-            raise HTTPNotFound()
+            raise NotFound(self.context, self.context.title_or_id())
         tool = zope.component.getUtility(ICurationTool)
         self.flag = tool.getFlag(name)
         if self.flag is None:
-            raise HTTPNotFound()
+            raise NotFound(self.context, self.context.title_or_id())
         self.flagid = name
         return self
 
@@ -97,7 +101,7 @@ class CurationFlagEditForm(z3c.form.form.EditForm):
 
     def update(self):
         if self.getContent() is None:
-            raise HTTPNotFound()
+            raise NotFound(self.context, self.context.title_or_id())
         return super(CurationFlagEditForm, self).update()
 
     def applyChanges(self, data):

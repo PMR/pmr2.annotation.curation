@@ -5,7 +5,6 @@ import zope.component
 
 from zope.interface.verify import verifyClass
 from zope.publisher.interfaces import IPublishTraverse
-from paste.httpexceptions import HTTPNotFound, HTTPFound
 
 from pmr2.annotation.curation.interfaces import *
 from pmr2.annotation.curation.tool import CurationToolAnnotation

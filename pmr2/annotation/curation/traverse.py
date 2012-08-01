@@ -1,7 +1,6 @@
 import zope.component
 from zope.publisher.interfaces import IRequest
 from ZPublisher.BaseRequest import DefaultPublishTraverse
-from paste.httpexceptions import HTTPNotFound, HTTPFound
 from Products.CMFCore.utils import getToolByName
 
 from pmr2.annotation.curation.browser.interfaces import ICurationToolDisplayForm
