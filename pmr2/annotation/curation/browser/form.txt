@@ -37,7 +37,7 @@ for a site.  There is a form to let them do this.
 ::
 
     >>> from pmr2.annotation.curation.browser.form import *
-    >>> from z3c.form.testing import TestRequest
+    >>> from pmr2.testing.base import TestRequest
     >>> request = TestRequest()
     >>> form = CurationFlagAddForm(self.portal, request)
     >>> result = form()

@@ -15,6 +15,8 @@ import z3c.form
 
 from Products.CMFCore.utils import getToolByName
 
+from pmr2.app.browser import form
+
 from pmr2.annotation.curation.schema.interfaces import *
 from pmr2.annotation.curation.interfaces import ICurationFlag
 from pmr2.annotation.curation.interfaces import ICurationTool
@@ -46,11 +48,8 @@ class CurationToolDisplayForm(z3c.form.form.DisplayForm):
     def __call__(self):
         return self.render()
 
-CurationToolDisplayFormView = layout.wrap_form(CurationToolDisplayForm,
-    label=_(u'Curation Tool Management'))
 
-
-class CurationFlagAddForm(z3c.form.form.AddForm):
+class CurationFlagAddForm(form.AddForm):
     fields = z3c.form.field.Fields(ICurationIdMixin) + \
              z3c.form.field.Fields(ICurationFlag).omit('items')
 
@@ -75,9 +74,6 @@ class CurationFlagAddForm(z3c.form.form.AddForm):
             self.context.absolute_url(),
             self.data['id']
         )
-
-CurationFlagAddFormView = layout.wrap_form(CurationFlagAddForm,
-    label = _(u'Add a Curation Flag'))
 
 
 class CurationFlagEditForm(z3c.form.form.EditForm):
@@ -112,9 +108,3 @@ class CurationFlagEditForm(z3c.form.form.EditForm):
             tool = zope.component.getUtility(ICurationTool)
             tool.setFlag(self.flagid, self.getContent())
         return changes
-
-
-CurationFlagEditFormView = layout.wrap_form(CurationFlagEditForm,
-    __wrapper_class=TraverseFormWrapper,
-    label = _(u'Edit Curation Flag'))
-
