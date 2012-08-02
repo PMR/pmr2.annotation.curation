@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="pmr2">
+
+  <!-- Note storage -->
+
+  <adapter
+      for="pmr2.app.exposure.interfaces.IExposureFile"
+      factory=".CurationNoteFactory"
+      provides="pmr2.annotation.curation.interfaces.ICurationNote"
+      name="curation"
+      />
+
+  <!-- Note Generation -->
+
+  <utility
+      name="curation"
+      component=".annotator.CurationAnnotatorFactory"
+      provides="pmr2.app.annotation.interfaces.IExposureFileAnnotator"
+      />
+
+</configure>
