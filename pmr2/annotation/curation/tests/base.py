@@ -26,6 +26,7 @@ def setup():
     fiveconfigure.debug_mode = True
     zcml.load_config('configure.zcml', pmr2.annotation.curation)
     fiveconfigure.debug_mode = False
+    ztc.installPackage('pmr2.annotation.curation')
 
 @onteardown
 def teardown():
@@ -34,3 +35,7 @@ def teardown():
 setup()
 teardown()
 ptc.setupPloneSite(products=('pmr2.annotation.curation',))
+
+
+class TestCase(ptc.PloneTestCase):
+    pass

@@ -151,9 +151,6 @@ class ICurationNote(zope.interface.Interface):
     The interface for the annotation storing the set of curation values.
     """
 
-    # TODO in the future we may need a vocabulary to store subsets of 
-    # applicable curation flag for the item this note is attached to.
-
     values = zope.schema.List(
         title=u'Values',
         description=u'Flags assigned to this object.',
@@ -162,23 +159,6 @@ class ICurationNote(zope.interface.Interface):
             schema=ICurationEntry,
         )
     )
-
-    #values = CurationEntryList(
-    #    title=u'Values',
-    #    description=u'Flags assigned to this object.',
-    #)
-
-    #reason = zope.schema.Dict(
-    #    title=u'Reasons',
-    #    description=u'The reason why the value was set for the flag, '
-    #                 'identified by the key.',
-    #    key_type=zope.schema.TextLine(
-    #        title=u'Key'
-    #    ),
-    #    value_type=zope.schema.TextLine(
-    #        title=u'Value'
-    #    ),
-    #)
 
 
 class ICurationTool(zope.interface.Interface):
