@@ -5,14 +5,15 @@ import unittest
 
 from zope.testing import doctestunit, doctest
 from zope.component import testing
-from Testing import ZopeTestCase as ztc
 
 import zope.interface
 import zope.component
 from zope.annotation import IAnnotations
 import z3c.form.testing
 
-from Products.Five import zcml
+from Zope2.App import zcml
+from Testing import ZopeTestCase as ztc
+
 from Products.Five import fiveconfigure
 from Products.PloneTestCase import PloneTestCase as ptc
 from Products.PloneTestCase.layer import PloneSite

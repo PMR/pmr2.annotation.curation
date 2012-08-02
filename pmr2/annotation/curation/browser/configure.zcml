@@ -50,7 +50,7 @@
       name="ploneform-macros"
       for="*"
       layer="pmr2.annotation.curation.interfaces.ICurationLayer"
-      class="pmr2.app.browser.layout.Macros"
+      class="pmr2.app.browser.templates.Macros"
       allowed_interface="zope.interface.common.mapping.IItemMapping"
       permission="zope.Public" />
 
