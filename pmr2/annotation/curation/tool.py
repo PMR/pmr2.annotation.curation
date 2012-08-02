@@ -11,6 +11,7 @@ from pmr2.app.settings.interfaces import IPMR2GlobalSettings
 from pmr2.app.settings.interfaces import IPMR2PluggableSettings
 from pmr2.app.factory import NamedUtilBase
 
+from pmr2.annotation.curation.interfaces import IMasterCurationFlag
 from pmr2.annotation.curation.interfaces import ICurationFlag
 from pmr2.annotation.curation.interfaces import ICurationTool
 
@@ -27,39 +28,30 @@ class CurationToolAnnotation(Persistent, Contained):
     zope.interface.implements(ICurationTool)
     zope.component.adapts(IAttributeAnnotatable)
 
-    custom_flags = zope.schema.fieldproperty.FieldProperty(
-        ICurationTool['custom_flags'])
-    inactive_flags = zope.schema.fieldproperty.FieldProperty(
-        ICurationTool['inactive_flags'])
+    all_flags = zope.schema.fieldproperty.FieldProperty(
+        ICurationTool['all_flags'])
+
+    def __init__(self, *a, **kw):
+        super(CurationToolAnnotation, self).__init__(*a, **kw)
+        self.all_flags = {}
 
     def getFlag(self, name):
-        if name in self.custom_flags:
-            return self.custom_flags[name]
-        flag = zope.component.queryUtility(ICurationFlag, name=name)
-        return flag
+        return self.all_flags.get(name, None)
 
-    def listActiveFlags(self):
-        flags = self.listFlags()
-        for flag in self.inactive_flags:
-            if flag in flags:
-                del flags[flag]
-        return flags
+    def addFlag(self, flag):
+        if not IMasterCurationFlag.providedBy(flag):
+            raise ValueError('value must be a valid master curation flag.')
 
-    def listFlags(self):
-        flags = dict(zope.component.getUtilitiesFor(ICurationFlag))
-        flags.update(self.custom_flags.items())
-        return flags
+        if self.getFlag(flag.id):
+            raise ValueError('flag `%s` already exists.' % flag.id)
 
-    def setFlag(self, name, flag):
-        # query flag first to not overwrite product-defined flags?
-        if flag is None and name in self.custom_flags:
-            del self.custom_flags[name]
-            return
-        self.custom_flags[name] = flag
-        # XXX to trigger modification commit behavior?
-        self.custom_flags = self.custom_flags
+        self.all_flags[flag.id] = flag
 
-    def isActive(self, name):
-        return name not in self.inactive_flags
+    def delFlag(self, name):
+        if self.getFlag(name):
+            self.all_flags.pop(name)
+
+    def keys(self):
+        return sorted(self.all_flags.keys())
 
 CurationTool = factory(CurationToolAnnotation)

@@ -1,9 +1,9 @@
 import zope.interface
 import zope.schema
 
+from pmr2.annotation.curation.schema.interfaces import IBasicCurationDict
 from pmr2.annotation.curation.schema.interfaces import ICurationEntry
 from pmr2.annotation.curation.schema.interfaces import ICurationEntryList
-
 from pmr2.annotation.curation.schema.interfaces import ICurationDict
 from pmr2.annotation.curation.schema.interfaces import ICurationFlagDict
 
@@ -24,6 +24,23 @@ class CurationEntryList(zope.schema.List):
             )
         )
         super(CurationEntryList, self).__init__(value_type, **kw)
+
+
+class BasicCurationDict(zope.schema.Dict):
+    """
+    The basic curation dictionary
+    """
+
+    zope.interface.implements(IBasicCurationDict)
+
+    def __init__(self, *a, **kw):
+        key_type = zope.schema.DottedName(title=u'Key')
+        value_type = zope.schema.List(
+            title=u'Values',
+            value_type=zope.schema.DottedName(title=u'Value'),
+        )
+
+        super(BasicCurationDict, self).__init__(key_type, value_type, *a, **kw)
 
 
 class CurationDict(zope.schema.Dict):
