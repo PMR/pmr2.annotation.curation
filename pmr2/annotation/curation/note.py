@@ -10,10 +10,10 @@ from pmr2.app.annotation.note import ExposureFileEditableNoteBase
 from pmr2.annotation.curation.interfaces import *
 
 
-class CurationNote(ExposureFileEditableNoteBase):
+class BasicCurationNote(ExposureFileEditableNoteBase):
     """\
     Note for the curation.
     """
 
-    zope.interface.implements(ICurationNote)
-    values = fieldproperty.FieldProperty(ICurationNote['values'])
+    zope.interface.implements(IBasicCurationSet)
+    flags = fieldproperty.FieldProperty(IBasicCurationSet['flags'])

@@ -7,16 +7,16 @@
 
   <adapter
       for="pmr2.app.exposure.interfaces.IExposureFile"
-      factory=".CurationNoteFactory"
+      factory=".BasicCurationNoteFactory"
       provides="pmr2.annotation.curation.interfaces.ICurationNote"
-      name="curation"
+      name="basic_curation"
       />
 
   <!-- Note Generation -->
 
   <utility
-      name="curation"
-      component=".annotator.CurationAnnotatorFactory"
+      name="basic_curation"
+      component=".annotator.BasicCurationAnnotatorFactory"
       provides="pmr2.app.annotation.interfaces.IExposureFileAnnotator"
       />
 

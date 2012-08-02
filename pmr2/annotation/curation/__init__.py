@@ -1,5 +1,5 @@
 from pmr2.app.annotation import note_factory as factory
 
-from pmr2.annotation.curation.note import CurationNote
+from pmr2.annotation.curation.note import BasicCurationNote
 
-CurationNoteFactory = factory(CurationNote, 'curation')
+BasicCurationNoteFactory = factory(BasicCurationNote, 'basic_curation')
