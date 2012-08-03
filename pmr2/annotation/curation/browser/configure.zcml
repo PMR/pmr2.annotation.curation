@@ -11,21 +11,21 @@
   <browser:page
       for="*"
       name="manage-curation"
-      class=".form.CurationToolDisplayFormView"
+      class=".manager.CurationToolDisplayFormView"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       for="*"
       name="manage-add-curation-flag"
-      class=".form.CurationFlagAddFormView"
+      class=".manager.CurationFlagAddFormView"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       for="*"
       name="manage-edit-curation-flag"
-      class=".form.CurationFlagEditFormView"
+      class=".manager.CurationFlagEditFormView"
       permission="cmf.ManagePortal"
       />
   -->
@@ -39,7 +39,7 @@
       for="Products.Five.browser.adding.ContentAdding
            *"
       name="addCuration"
-      factory=".form.CurationFlagAddFormView"
+      factory=".manager.CurationFlagAddFormView"
       provides="z3c.form.interfaces.IAddForm"
       />
   -->

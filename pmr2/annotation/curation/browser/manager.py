@@ -22,6 +22,8 @@ from pmr2.annotation.curation.interfaces import ICurationFlag
 from pmr2.annotation.curation.interfaces import ICurationTool
 from pmr2.annotation.curation.flag import CurationFlag
 
+from pmr2.annotation.curation.browser.templates import path
+
 from pmr2.annotation.curation.browser.interfaces import *
 from pmr2.annotation.curation.browser.layout import TraverseFormWrapper
 
@@ -30,7 +32,7 @@ class CurationToolDisplayForm(z3c.form.form.DisplayForm):
     fields = z3c.form.field.Fields(ICurationTool).omit(
         'custom_flags', 'inactive_flags')
 
-    template = ViewPageTemplateFile('manage_curation.pt')
+    template = ViewPageTemplateFile(path('manage_curation.pt'))
 
     def portal_url(self):
         portal = getToolByName(self.context, 'portal_url').getPortalObject()
