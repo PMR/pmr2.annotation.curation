@@ -8,3 +8,7 @@ class ICurationDictWidget(IMultiWidget):
 
 class ICurationFlagDictWidget(ITextAreaWidget):
     """Curation Flag Dict Widget."""
+
+
+class ICurationFlagListSelectWidget(IMultiWidget):
+    """Curation Flag List Select Widget."""

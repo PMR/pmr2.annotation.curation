@@ -1,0 +1,65 @@
+=========================
+Curation Flag Dict Widget
+=========================
+
+The curation flag dictionary widget provides a jQuery based widget that
+allows user to create/destroy valid flag values for a custom curation
+flag, with fallback to a plain textarea input if user's browser has no
+javascript support.  The jQuery based widget takes the value provided by
+the textarea and generates the set of input boxes plus the controls.
+Upon submission, those values will be converted back into the format
+required and be placed into the textarea so it can be submitted.
+
+As for all widgets, the select widget must provide the new ``IWidget``
+interface:
+::
+
+    >>> from zope.interface import verify
+    >>> from z3c.form.interfaces import IWidget
+    >>> from pmr2.annotation.curation.browser import widget
+    >>> from pmr2.annotation.curation.browser.widget import interfaces
+    >>> from zope.traversing import testing
+    >>> testing.setUp()
+    >>> verify.verifyClass(IWidget, widget.CurationFlagListSelectWidget)
+    True
+    >>> verify.verifyClass(interfaces.ICurationFlagListSelectWidget,
+    ...                    widget.CurationFlagListSelectWidget)
+    True
+
+
+The widget can be instantiated only using the request:
+::
+
+    >>> from pmr2.testing.base import TestRequest
+    >>> request = TestRequest()
+    >>> w = widget.CurationFlagListSelectWidget(request)
+
+Manually assign the widget with some key attributes:
+::
+
+    >>> w.id = 'widget-id'
+    >>> w.name = 'widget.name'
+
+Register the template for at least the widget and request for the
+rendering of the input widget.
+::
+
+    >>> import os.path
+    >>> import zope.interface
+    >>> from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+    >>> from zope.pagetemplate.interfaces import IPageTemplate
+    >>> import z3c.form.browser
+    >>> import z3c.form.widget
+    >>> template = os.path.join(os.path.dirname(widget.__file__),
+    ...     'curationflaglistselect_input.pt')
+    >>> factory = z3c.form.widget.WidgetTemplateFactory(template)
+    >>> zope.component.provideAdapter(factory,
+    ...     (zope.interface.Interface, IDefaultBrowserLayer, None, None, None),
+    ...     IPageTemplate, name='input')
+
+Check that the base renders.
+::
+
+    >>> print w.render()
+    <div>
+    </div>

@@ -49,6 +49,7 @@ class CompleteDocTestCase(base.CompleteDocTestCase):
         super(CompleteDocTestCase, self).setUp()
 
         from pmr2.app.exposure.content import Exposure, ExposureFile
+        from pmr2.app.exposure.content import ExposureFileType
 
         from pmr2.annotation.curation.content import MasterCurationFlag
         from pmr2.annotation.curation.content import CurationValue
@@ -56,6 +57,7 @@ class CompleteDocTestCase(base.CompleteDocTestCase):
 
         def curation_value(id_, title):
             value = CurationValue()
+            # just local shortcuts.
             value.id = 'c' + id_
             value.title = title
             return value
@@ -79,3 +81,12 @@ class CompleteDocTestCase(base.CompleteDocTestCase):
         file1 = ExposureFile('file1')
         context['file1'] = file1
         context['file1'].reindexObject()
+
+        # Also create a custom exposure file type with just the curation
+
+        self.portal['curation_type'] = ExposureFileType('curation_type')
+        self.portal.curation_type.title = u'Curation Type'
+        self.portal.curation_type.views = [
+            u'basic_curation']
+        self.portal.curation_type.tags = []
+        self._publishContent(self.portal.curation_type)

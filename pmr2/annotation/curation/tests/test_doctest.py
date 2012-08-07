@@ -30,6 +30,12 @@ def test_suite():
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 
+        ztc.ZopeDocFileSuite(
+            'browser/widget/curationflaglistselect.txt', 
+            package='pmr2.annotation.curation',
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+        ),
+
     ])
 
 if __name__ == '__main__':
