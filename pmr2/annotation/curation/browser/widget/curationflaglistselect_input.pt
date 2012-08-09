@@ -21,13 +21,6 @@
         <div tal:condition="widget/error"
              tal:replace="structure widget/error/render">error</div>
         <div class="widget">
-          <div class="multi-widget-checkbox">
-            <input id="" name=""
-                   class="multi-widget-checkbox checkbox-widget"
-                   type="checkbox" value="1"
-                   tal:attributes="id string:${widget/id}-remove;
-                                   name string:${widget/name}.remove" />
-          </div>
           <div class="multi-widget-input"
                tal:content="structure widget/render">
             <input size="24" value="" type="text" />

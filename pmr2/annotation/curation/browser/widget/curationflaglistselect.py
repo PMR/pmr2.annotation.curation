@@ -10,10 +10,19 @@ from z3c.form.browser.multi import MultiWidget
 from pmr2.annotation.curation.browser.widget import interfaces
 
 
-class CurationFlagListSelectWidget(HTMLFormElement, widget.MultiWidget):
+class CurationFlagListSelectWidget(MultiWidget):
     zope.interface.implements(interfaces.ICurationFlagListSelectWidget)
 
-    # based directly on the default widget
+    klass = u'curationflaglistselect-widget'
+    items = ()
+
+    showLabel = True # show labels for item subwidgets or not
 
     def update(self):
+        """See z3c.form.interfaces.IWidget."""
         super(CurationFlagListSelectWidget, self).update()
+
+    def updateAllowAddRemove(self):
+        # Disallow adding or removing by end-users as we provide the
+        # values.
+        self.allowAdding = self.allowRemoving = False
