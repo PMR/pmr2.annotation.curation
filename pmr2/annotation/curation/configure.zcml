@@ -12,5 +12,6 @@
   <include file="adapter.zcml" />
   <include file="annotator.zcml" />
   <include file="profiles.zcml" />
+  <include file="vocab.zcml" />
 
 </configure>

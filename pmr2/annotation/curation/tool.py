@@ -1,3 +1,5 @@
+import new
+
 from persistent import Persistent
 from zope.annotation import factory, IAttributeAnnotatable
 from zope.app.container.contained import Contained
@@ -55,3 +57,40 @@ class CurationToolAnnotation(Persistent, Contained):
         return sorted(self.all_flags.keys())
 
 CurationTool = factory(CurationToolAnnotation)
+
+
+def buildSchemaInterface(flags, name=None,
+        _vocabulary='pmr2.curation.simple_curation_value'):
+    """\
+    Build a schema interface based on the flags 
+
+    curation_set_id -
+        The curation set id to use.  Default is `None` currently as
+        this feature is not implemented yet.
+    """
+
+    # Dragons in this method.
+
+    default = {
+        '__module__': __name__,
+        '__doc__': 'Dynamic interface',
+    }
+
+    if name is None:
+        name = 'ICurationFlagSchema'
+
+    fields = {}
+    for k, v in flags.iteritems():
+        fields[k] = zope.schema.Choice(
+            title=v.title,
+            required=False,
+            # XXX placeholder: this will NOT reflect the value
+            vocabulary=_vocabulary,
+        )
+    default.update(fields)
+
+    # Incoming lion, get in the car.
+    interfaceClass = new.classobj(name, (zope.interface.Interface,), default)
+
+    return interfaceClass
+    # actual data assignment should be done via dict datamanager.
