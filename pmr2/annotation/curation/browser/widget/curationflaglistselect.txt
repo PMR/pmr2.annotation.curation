@@ -17,6 +17,8 @@ interface:
     >>> import zope.schema
     >>> from zope.interface import verify
     >>> from z3c.form.interfaces import IWidget
+    >>> from z3c.form.widget import FieldWidget
+    >>> from z3c.form.browser.object import ObjectWidget
     >>> from pmr2.annotation.curation.browser import widget
     >>> from pmr2.annotation.curation.browser.widget import interfaces
     >>> verify.verifyClass(IWidget, widget.CurationFlagListSelectWidget)
@@ -31,7 +33,7 @@ The widget can be instantiated only using the request:
 
     >>> from pmr2.testing.base import TestRequest
     >>> request = TestRequest()
-    >>> w = widget.CurationFlagListSelectWidget(request)
+    >>> w = ObjectWidget(request)
 
 Manually assign the widget with some key attributes:
 ::
@@ -39,25 +41,101 @@ Manually assign the widget with some key attributes:
     >>> w.id = 'widget-id'
     >>> w.name = 'widget.name'
 
-Check that the base renders.
+Before we can finally render this, we need some sort of schema defined.
+We create an interface based similarly on what will be created by the
+curation tool.
 ::
 
+    >>> class IDemo(zope.interface.Interface):
+    ...     status = zope.schema.Choice(
+    ...         title=u'Status',
+    ...         required=False,
+    ...         vocabulary='pmr2.curation.simple_curation_vocab',
+    ...     )
+    ...
+    ...     grading = zope.schema.Choice(
+    ...         title=u'Grading',
+    ...         required=False,
+    ...         vocabulary='pmr2.curation.simple_curation_vocab',
+    ...     )
+    ...
+    ...     correctness = zope.schema.Choice(
+    ...         title=u'Correctness',
+    ...         required=False,
+    ...         vocabulary='pmr2.curation.simple_curation_vocab',
+    ...     )
+    ...
+    >>> field = zope.schema.Object(
+    ...     title=u'Item', 
+    ...     schema=IDemo,
+    ... )
+    >>> w = FieldWidget(field, w)
+    >>> w.value = {
+    ...     'status': 'c1',
+    ...     'grading': 'c0',
+    ...     'software': None,
+    ... }
     >>> w.update()
+
+Should be no problems let, so find out what this looks like:
+::
+
     >>> print w.render()
-    <div class="curationflaglistselect-widget">
+    <div class="object-widget required">
+      <div class="label">
+        <label for="widgets-status">
+          <span>Status</span>
+        </label>
+      </div>
+      <div class="widget">
+        <select id="widgets-status" name="widgets.status:list" 
+                class="select-widget choice-field" size="1">
+          <option id="widgets-status-novalue" 
+                  value="--NOVALUE--">no value</option>
+          <option id="widgets-status-0" value="c0">0 star</option>
+          <option id="widgets-status-1" value="c1" 
+                  selected="selected">1 star</option>
+          <option id="widgets-status-2" value="c2">2 star</option>
+          <option id="widgets-status-3" value="c3">3 star</option>
+        </select>
+        <input name="widgets.status-empty-marker" type="hidden" value="1" />
+      </div>
+      <div class="label">
+        <label for="widgets-grading">
+          <span>Grading</span>
+        </label>
+      </div>
+      <div class="widget">
+        <select id="widgets-grading" name="widgets.grading:list" 
+                class="select-widget choice-field" size="1">
+          <option id="widgets-grading-novalue" 
+                  value="--NOVALUE--">no value</option>
+          <option id="widgets-grading-0" value="c0" 
+                  selected="selected">0 star</option>
+          <option id="widgets-grading-1" value="c1">1 star</option>
+          <option id="widgets-grading-2" value="c2">2 star</option>
+          <option id="widgets-grading-3" value="c3">3 star</option>
+        </select>
+        <input name="widgets.grading-empty-marker" type="hidden" value="1" />
+      </div>
+      <div class="label">
+        <label for="widgets-correctness">
+          <span>Correctness</span>
+        </label>
+      </div>
+      <div class="widget">
+        <select id="widgets-correctness" name="widgets.correctness:list" 
+                class="select-widget choice-field" size="1">
+        <option id="widgets-correctness-novalue" 
+                value="--NOVALUE--">no value</option>
+        <option id="widgets-correctness-0" value="c0">0 star</option>
+        <option id="widgets-correctness-1" value="c1">1 star</option>
+        <option id="widgets-correctness-2" value="c2">2 star</option>
+        <option id="widgets-correctness-3" value="c3">3 star</option>
+        </select>
+        <input name="widgets.correctness-empty-marker" type="hidden" 
+               value="1" />
+      </div>
+      <input name="-empty-marker" type="hidden" value="1" />
     </div>
 
-To make it do anything useful, we need to assign a list of values to
-allow the user to assign the attributes.
-
-    >>> field = zope.schema.List(
-    ...     __name__=u'foo',
-    ...     value_type=zope.schema.Choice(
-    ...         title=u'Number', 
-    ...         values=[42, 43],
-    ...     ),
-    ... )
-    >>> w.field = field
-    >>> w.value = [[u'42'], [u'43']]
-    >>> w.update()
-    >>> print w.render()
