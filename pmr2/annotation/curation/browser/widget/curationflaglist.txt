@@ -2,13 +2,9 @@
 Curation Flag Dict Widget
 =========================
 
-The curation flag dictionary widget provides a jQuery based widget that
-allows user to create/destroy valid flag values for a custom curation
-flag, with fallback to a plain textarea input if user's browser has no
-javascript support.  The jQuery based widget takes the value provided by
-the textarea and generates the set of input boxes plus the controls.
-Upon submission, those values will be converted back into the format
-required and be placed into the textarea so it can be submitted.
+This is currently reduced to a standard Object widget as it is possible
+to dynamically instantiate an interface based on the defined curation
+flags within the curation tool.  The following is kept for reference.
 
 As for all widgets, the select widget must provide the new ``IWidget``
 interface:
@@ -21,12 +17,11 @@ interface:
     >>> from z3c.form.browser.object import ObjectWidget
     >>> from pmr2.annotation.curation.browser import widget
     >>> from pmr2.annotation.curation.browser.widget import interfaces
-    >>> verify.verifyClass(IWidget, widget.CurationFlagListSelectWidget)
+    >>> verify.verifyClass(IWidget, widget.CurationFlagListWidget)
     True
-    >>> verify.verifyClass(interfaces.ICurationFlagListSelectWidget,
-    ...                    widget.CurationFlagListSelectWidget)
+    >>> verify.verifyClass(interfaces.ICurationFlagListWidget,
+    ...                    widget.CurationFlagListWidget)
     True
-
 
 The widget can be instantiated only using the request:
 ::
@@ -73,7 +68,7 @@ curation tool.
     >>> w.value = {
     ...     'status': 'c1',
     ...     'grading': 'c0',
-    ...     'software': None,
+    ...     'correctness': None,
     ... }
     >>> w.update()
 
@@ -83,22 +78,22 @@ Should be no problems let, so find out what this looks like:
     >>> print w.render()
     <div class="object-widget required">
       <div class="label">
-        <label for="widgets-status">
-          <span>Status</span>
+        <label for="widgets-correctness">
+          <span>Correctness</span>
         </label>
       </div>
       <div class="widget">
-        <select id="widgets-status" name="widgets.status:list" 
+        <select id="widgets-correctness" name="widgets.correctness:list" 
                 class="select-widget choice-field" size="1">
-          <option id="widgets-status-novalue" 
-                  value="--NOVALUE--">no value</option>
-          <option id="widgets-status-0" value="c0">0 star</option>
-          <option id="widgets-status-1" value="c1" 
-                  selected="selected">1 star</option>
-          <option id="widgets-status-2" value="c2">2 star</option>
-          <option id="widgets-status-3" value="c3">3 star</option>
+          <option id="widgets-correctness-novalue" value="--NOVALUE--" 
+                  selected="selected">no value</option>
+          <option id="widgets-correctness-0" value="c0">0 star</option>
+          <option id="widgets-correctness-1" value="c1">1 star</option>
+          <option id="widgets-correctness-2" value="c2">2 star</option>
+          <option id="widgets-correctness-3" value="c3">3 star</option>
         </select>
-        <input name="widgets.status-empty-marker" type="hidden" value="1" />
+        <input name="widgets.correctness-empty-marker" type="hidden" 
+               value="1" />
       </div>
       <div class="label">
         <label for="widgets-grading">
@@ -119,23 +114,22 @@ Should be no problems let, so find out what this looks like:
         <input name="widgets.grading-empty-marker" type="hidden" value="1" />
       </div>
       <div class="label">
-        <label for="widgets-correctness">
-          <span>Correctness</span>
+        <label for="widgets-status">
+          <span>Curation Status</span>
         </label>
       </div>
       <div class="widget">
-        <select id="widgets-correctness" name="widgets.correctness:list" 
+        <select id="widgets-status" name="widgets.status:list" 
                 class="select-widget choice-field" size="1">
-        <option id="widgets-correctness-novalue" 
-                value="--NOVALUE--">no value</option>
-        <option id="widgets-correctness-0" value="c0">0 star</option>
-        <option id="widgets-correctness-1" value="c1">1 star</option>
-        <option id="widgets-correctness-2" value="c2">2 star</option>
-        <option id="widgets-correctness-3" value="c3">3 star</option>
+          <option id="widgets-status-novalue" 
+                  value="--NOVALUE--">no value</option>
+          <option id="widgets-status-0" value="c0">0 star</option>
+          <option id="widgets-status-1" value="c1" 
+                  selected="selected">1 star</option>
+          <option id="widgets-status-2" value="c2">2 star</option>
+          <option id="widgets-status-3" value="c3">3 star</option>
         </select>
-        <input name="widgets.correctness-empty-marker" type="hidden" 
-               value="1" />
+        <input name="widgets.status-empty-marker" type="hidden" value="1" />
       </div>
       <input name="-empty-marker" type="hidden" value="1" />
     </div>
-

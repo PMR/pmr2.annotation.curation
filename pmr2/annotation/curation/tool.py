@@ -60,7 +60,7 @@ CurationTool = factory(CurationToolAnnotation)
 
 
 def buildSchemaInterface(flags, name=None,
-        _vocabulary='pmr2.curation.simple_curation_value'):
+        _vocabulary='pmr2.curation.simple_curation_vocab'):
     """\
     Build a schema interface based on the flags 
 
@@ -80,13 +80,15 @@ def buildSchemaInterface(flags, name=None,
         name = 'ICurationFlagSchema'
 
     fields = {}
-    for k, v in flags.iteritems():
+    for c, f in enumerate(sorted(flags.items())):
+        k, v = f
         fields[k] = zope.schema.Choice(
             title=v.title,
             required=False,
             # XXX placeholder: this will NOT reflect the value
             vocabulary=_vocabulary,
         )
+        fields[k].order = c
     default.update(fields)
 
     # Incoming lion, get in the car.

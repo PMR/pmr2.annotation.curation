@@ -42,6 +42,11 @@ class BasicCurationDict(zope.schema.Dict):
 
         super(BasicCurationDict, self).__init__(key_type, value_type, *a, **kw)
 
+    # XXX don't do this, don't dynamic schema here (yet).
+    # @property
+    # def schema(self):
+    #     return zope.interface.Interface
+
 
 class CurationDict(zope.schema.Dict):
     """\

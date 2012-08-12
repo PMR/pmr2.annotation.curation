@@ -5,6 +5,6 @@
 
   <include file="curationflagdict.zcml" />
   <include file="curationdict.zcml" />
-  <include file="curationflaglistselect.zcml" />
+  <include file="curationflaglist.zcml" />
 
 </configure>

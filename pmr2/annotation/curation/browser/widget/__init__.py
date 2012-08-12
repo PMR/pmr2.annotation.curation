@@ -1,2 +1,2 @@
-from pmr2.annotation.curation.browser.widget.curationflaglistselect \
-    import CurationFlagListSelectWidget
+from pmr2.annotation.curation.browser.widget.curationflaglist \
+    import CurationFlagListWidget

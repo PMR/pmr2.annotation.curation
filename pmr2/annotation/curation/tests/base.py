@@ -74,7 +74,9 @@ class CompleteDocTestCase(base.CompleteDocTestCase):
         curation.addFlag(
             master_flag('status', u'Curation Status', list('0123')))
         curation.addFlag(
-            master_flag('software', u'Software Rating', list('0123')))
+            master_flag('grading', u'Grading', list('0123')))
+        curation.addFlag(
+            master_flag('correctness', u'Correctness', list('0123')))
 
         # Add in the exposure file which we will test with.
         context = self.portal.exposure['1']
