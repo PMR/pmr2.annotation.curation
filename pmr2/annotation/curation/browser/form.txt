@@ -43,6 +43,5 @@ readily be selected by the end user.
 ::
 
     >>> request = TestRequest()
-    >>> form.update()
     >>> form = ExposureWizardForm(context, request)
     >>> result = form()

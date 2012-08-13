@@ -8,7 +8,7 @@
   <adapter
       for="pmr2.app.exposure.interfaces.IExposureFile"
       factory=".BasicCurationNoteFactory"
-      provides="pmr2.annotation.curation.interfaces.ICurationNote"
+      provides="pmr2.annotation.curation.interfaces.IBasicCurationSet"
       name="basic_curation"
       />
 

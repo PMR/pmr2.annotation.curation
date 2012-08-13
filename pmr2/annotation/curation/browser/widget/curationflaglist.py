@@ -19,27 +19,6 @@ from pmr2.annotation.curation.interfaces import ICurationTool
 from pmr2.annotation.curation.tool import buildSchemaInterface
 
 
-class CurationFlagListSelectMultiWidget(MultiWidget):
-    """\
-    Original Multi Version.
-    """
-    zope.interface.implements(interfaces.ICurationFlagListSelectWidget)
-
-    klass = u'curationflaglistselect-widget'
-    items = ()
-
-    showLabel = True # show labels for item subwidgets or not
-
-    def update(self):
-        """See z3c.form.interfaces.IWidget."""
-        super(CurationFlagListSelectWidget, self).update()
-
-    def updateAllowAddRemove(self):
-        # Disallow adding or removing by end-users as we provide the
-        # values.
-        self.allowAdding = self.allowRemoving = False
-
-
 # Object based widget and support classes.
 
 class CurationFlagListSubForm(ObjectSubForm):

@@ -142,23 +142,6 @@ class ICurationFlag(zope.interface.Interface):
         """
 
 
-
-
-class ICurationNote(zope.interface.Interface):
-    """\
-    The interface for the annotation storing the set of curation values.
-    """
-
-    values = zope.schema.List(
-        title=u'Values',
-        description=u'Flags assigned to this object.',
-        value_type=zope.schema.Object(
-            title=u'Curation Entry',
-            schema=ICurationEntry,
-        )
-    )
-
-
 class ICurationTool(zope.interface.Interface):
     """\
     The interface to the curation tool.  
