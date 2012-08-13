@@ -1,0 +1,48 @@
+=====
+Forms
+=====
+
+These are the forms for the end users.
+
+--------------
+Basic Curation
+--------------
+
+Here we first set up the environment.
+::
+
+    >>> import zope.interface
+    >>> import zope.component
+    >>> from pmr2.testing.base import TestRequest
+    >>> from pmr2.app.exposure.browser.browser import ExposureFileAnnotatorForm
+    >>> from pmr2.app.exposure.browser.browser import ExposureFileNoteEditForm
+    >>> from pmr2.app.exposure.browser.wizard import ExposureWizardForm
+    >>> from pmr2.app.exposure.interfaces import IExposureWizard
+    >>> context = self.portal.exposure['1']
+    >>> ewiz = zope.component.getAdapter(context, IExposureWizard)
+
+Adding a file to the wizard to begin.
+::
+
+    >>> request = TestRequest(form={
+    ...     'form.buttons.add_file': 1,
+    ... })
+    >>> form = ExposureWizardForm(context, request)
+    >>> form.update()
+    >>> request = TestRequest(
+    ...     form={
+    ...         'file0.widgets.filetype': 'Curation Type',
+    ...         'file0.widgets.filename': 'file2',
+    ...         'file0.buttons.update': 1,
+    ...     })
+    >>> form = ExposureWizardForm(context, request)
+    >>> result = form()
+
+The form should render fine with the file added and the curation flags
+readily be selected by the end user.
+::
+
+    >>> request = TestRequest()
+    >>> form.update()
+    >>> form = ExposureWizardForm(context, request)
+    >>> result = form()

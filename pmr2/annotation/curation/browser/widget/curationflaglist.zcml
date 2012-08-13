@@ -27,7 +27,7 @@
 
   <!-- Subform factory -->
   <adapter
-      factory=".curationflaglist.SubformAdapter"
+      factory=".curationflaglist.CurationFlagListSubformAdapter"
       />
 
 </configure>

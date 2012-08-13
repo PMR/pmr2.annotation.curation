@@ -2,7 +2,6 @@ import zope.interface
 import zope.schema
 
 from pmr2.annotation.curation.schema.interfaces import IBasicCurationDict
-from pmr2.annotation.curation.schema.interfaces import ICurationEntry
 from pmr2.annotation.curation.schema.interfaces import ICurationEntryList
 from pmr2.annotation.curation.schema.interfaces import ICurationDict
 from pmr2.annotation.curation.schema.interfaces import ICurationFlagDict

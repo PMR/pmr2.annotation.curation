@@ -28,7 +28,7 @@ The widget can be instantiated only using the request:
 
     >>> from pmr2.testing.base import TestRequest
     >>> request = TestRequest()
-    >>> w = ObjectWidget(request)
+    >>> w = widget.CurationFlagListWidget(request)
 
 Manually assign the widget with some key attributes:
 ::
@@ -36,33 +36,13 @@ Manually assign the widget with some key attributes:
     >>> w.id = 'widget-id'
     >>> w.name = 'widget.name'
 
-Before we can finally render this, we need some sort of schema defined.
-We create an interface based similarly on what will be created by the
-curation tool.
+Since our widget will resolve the correct schema, just supply the widget
+with values it can provide and it should just work.
 ::
 
-    >>> class IDemo(zope.interface.Interface):
-    ...     status = zope.schema.Choice(
-    ...         title=u'Status',
-    ...         required=False,
-    ...         vocabulary='pmr2.curation.simple_curation_vocab',
-    ...     )
-    ...
-    ...     grading = zope.schema.Choice(
-    ...         title=u'Grading',
-    ...         required=False,
-    ...         vocabulary='pmr2.curation.simple_curation_vocab',
-    ...     )
-    ...
-    ...     correctness = zope.schema.Choice(
-    ...         title=u'Correctness',
-    ...         required=False,
-    ...         vocabulary='pmr2.curation.simple_curation_vocab',
-    ...     )
-    ...
     >>> field = zope.schema.Object(
     ...     title=u'Item', 
-    ...     schema=IDemo,
+    ...     schema=zope.interface.Interface,
     ... )
     >>> w = FieldWidget(field, w)
     >>> w.value = {

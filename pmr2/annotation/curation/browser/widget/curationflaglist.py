@@ -1,15 +1,17 @@
 import zope.component
 import zope.interface
 
-from z3c.form.interfaces import IFieldWidget
+from zope.pagetemplate.interfaces import IPageTemplate
+
+from z3c.form.interfaces import IFormLayer, IFieldWidget, ISubformFactory
 from z3c.form.field import Fields
 
-from z3c.form.object import ObjectSubForm, makeDummyObject
+from z3c.form.object import ObjectSubForm, makeDummyObject, SubformAdapter
 
 from z3c.form.browser.widget import HTMLFormElement
 from z3c.form.browser.multi import MultiWidget
 from z3c.form.browser.object import ObjectWidget
-from z3c.form.widget import FieldWidget
+from z3c.form.widget import Widget, FieldWidget
 from z3c.form.browser import widget
 
 from pmr2.annotation.curation.browser.widget import interfaces
@@ -62,6 +64,37 @@ class CurationFlagListWidget(ObjectWidget):
             (content, self.request, self.context,
              form, self, self.field, makeDummyObject(schema)),
             ISubformFactory)()
+
+    def render(self):
+        """See z3c.form.interfaces.IWidget."""
+        template = self.template
+
+        ct = zope.component.getUtility(ICurationTool)
+        schema = buildSchemaInterface(ct.all_flags)
+
+        if template is None:
+            template = zope.component.queryMultiAdapter(
+                (self.context, self.request, self.form, self.field, self,
+                 makeDummyObject(schema)),
+                IPageTemplate, name=self.mode)
+            if template is None:
+                #return super(ObjectWidget, self).render()
+                return Widget.render(self)
+        return template(self)
+
+
+class CurationFlagListSubformAdapter(SubformAdapter):
+    """Most basic-default subform factory adapter"""
+
+    zope.component.adapts(zope.interface.Interface, #widget value
+                          IFormLayer,    #request
+                          zope.interface.Interface, #widget context
+                          zope.interface.Interface, #form
+                          interfaces.ICurationFlagListWidget, #widget
+                          zope.interface.Interface, #field
+                          zope.interface.Interface) #field.schema
+
+    factory = CurationFlagListSubForm
 
 
 @zope.interface.implementer(IFieldWidget)

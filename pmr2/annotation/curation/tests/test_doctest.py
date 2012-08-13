@@ -31,7 +31,13 @@ def test_suite():
         ),
 
         ztc.ZopeDocFileSuite(
-            'browser/widget/curationflaglistselect.txt', 
+            'browser/form.txt', package='pmr2.annotation.curation',
+            test_class=base.CompleteDocTestCase,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+        ),
+
+        ztc.ZopeDocFileSuite(
+            'browser/widget/curationflaglist.txt', 
             package='pmr2.annotation.curation',
             test_class=base.CompleteDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,

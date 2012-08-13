@@ -1,8 +1,6 @@
 import zope.schema
 import zope.interface
 
-from pmr2.annotation.curation.schema.interfaces import ICurationEntry
-
 from pmr2.annotation.curation.schema import BasicCurationDict
 from pmr2.annotation.curation.schema import CurationFlagDict
 
