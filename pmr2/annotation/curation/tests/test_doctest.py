@@ -39,7 +39,7 @@ def test_suite():
         ztc.ZopeDocFileSuite(
             'browser/widget/curationflaglist.txt', 
             package='pmr2.annotation.curation',
-            test_class=base.CompleteDocTestCase,
+            test_class=base.DocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 

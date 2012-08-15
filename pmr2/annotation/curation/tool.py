@@ -49,10 +49,12 @@ class CurationToolAnnotation(Persistent, Contained):
             raise ValueError('flag `%s` already exists.' % flag.id)
 
         self.all_flags[flag.id] = flag
+        self._p_changed = True
 
     def delFlag(self, name):
         if self.getFlag(name):
             self.all_flags.pop(name)
+            self._p_changed = True
 
     def keys(self):
         return sorted(self.all_flags.keys())

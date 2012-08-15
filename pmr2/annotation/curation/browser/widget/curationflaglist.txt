@@ -37,10 +37,31 @@ Manually assign the widget with some key attributes:
     >>> w.id = 'widget-id'
     >>> w.name = 'widget.name'
 
-Since our widget will resolve the correct schema, just supply the widget
-with values it can provide and it should just work.
+Try to assign a field at it and see what it will do.
 ::
 
+    >>> field = zope.schema.Object(
+    ...     title=u'Item', 
+    ...     schema=zope.interface.Interface,
+    ... )
+    >>> w = FieldWidget(field, w)
+    >>> w.update()
+
+Let's see what a base rendering might look like:
+::
+
+    >>> print w.render()
+    <div class="object-widget required">
+        <input name="-empty-marker" type="hidden" value="1" />
+    </div>
+
+Now that the basic uninstantiated test out of the way, the curation tool
+should be properly instantiated with some values for some actual work to
+be done.  As the widget will resolve the correct schema, just supply the
+widget with values it can provide and it should just work.
+::
+
+    >>> self.setUpCurationTool()
     >>> field = zope.schema.Object(
     ...     title=u'Item', 
     ...     schema=zope.interface.Interface,
@@ -53,7 +74,7 @@ with values it can provide and it should just work.
     ... }
     >>> w.update()
 
-Should be no problems let, so find out what this looks like:
+Should be no problems there, so find out what this looks like:
 ::
 
     >>> print w.render()

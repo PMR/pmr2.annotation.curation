@@ -139,7 +139,7 @@ class CurationFlagListWidget(ObjectWidget):
     @property
     def schema(self):
         ct = zope.component.queryUtility(ICurationTool)
-        flags = ct is not None and ct.all_flags or []
+        flags = ct is not None and ct.all_flags or {}
         schema = buildSchemaInterface(flags)
         return schema
 
