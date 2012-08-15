@@ -24,3 +24,9 @@ class ICurationFlagDict(zope.schema.interfaces.IDict):
     """\
     Curation flag dictionary.
     """
+
+
+class ISequenceChoice(zope.schema.interfaces.IChoice):
+    """\
+    Customized Choice that lets me discriminate my own z3c things.
+    """

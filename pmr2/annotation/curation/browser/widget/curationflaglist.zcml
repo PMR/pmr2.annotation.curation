@@ -30,4 +30,8 @@
       factory=".curationflaglist.CurationFlagListSubformAdapter"
       />
 
+  <adapter
+      factory=".curationflaglist.CurationFlagListConverter"
+      />
+
 </configure>

@@ -1,9 +1,13 @@
 import zope.interface
 import zope.schema
 
+from zope.schema.interfaces import ConstraintNotSatisfied
+from zope.schema.vocabulary import getVocabularyRegistry
+
 from pmr2.annotation.curation.schema.interfaces import IBasicCurationDict
 from pmr2.annotation.curation.schema.interfaces import ICurationDict
 from pmr2.annotation.curation.schema.interfaces import ICurationFlagDict
+from pmr2.annotation.curation.schema.interfaces import ISequenceChoice
 
 
 class BasicCurationDict(zope.schema.Dict):
@@ -18,6 +22,7 @@ class BasicCurationDict(zope.schema.Dict):
         value_type = zope.schema.List(
             title=u'Values',
             value_type=zope.schema.DottedName(title=u'Value'),
+            required=False,
         )
 
         super(BasicCurationDict, self).__init__(key_type, value_type, *a, **kw)
@@ -151,3 +156,27 @@ class CurationFlagDict(zope.schema.Dict):
             if key:
                 result[key] = value
         return result
+
+
+class SequenceChoice(zope.schema.Choice):
+    """\
+    A marked Choice field for discriminating the right adapters.
+    """
+
+    zope.interface.implements(ISequenceChoice)
+    _type = list
+
+    def _validate(self, value):
+        # Pass all validations during initialization
+        if self._init_field:
+            return
+        try:
+            super(SequenceChoice, self)._validate(value)
+        except ConstraintNotSatisfied:
+            # retry
+            vocabulary = self.vocabulary
+            vr = getVocabularyRegistry()
+            vocabulary = vr.get(None, self.vocabularyName)
+            for v in value:
+                if v not in vocabulary:
+                    raise ConstraintNotSatisfied(v)

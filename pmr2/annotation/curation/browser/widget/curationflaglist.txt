@@ -12,6 +12,7 @@ interface:
 
     >>> import zope.schema
     >>> from zope.interface import verify
+    >>> from z3c.form.form import EditForm
     >>> from z3c.form.interfaces import IWidget
     >>> from z3c.form.widget import FieldWidget
     >>> from z3c.form.browser.object import ObjectWidget
@@ -46,8 +47,8 @@ with values it can provide and it should just work.
     ... )
     >>> w = FieldWidget(field, w)
     >>> w.value = {
-    ...     'status': 'c1',
-    ...     'grading': 'c0',
+    ...     'status': ['c1'],
+    ...     'grading': ['c0'],
     ...     'correctness': None,
     ... }
     >>> w.update()
@@ -64,7 +65,7 @@ Should be no problems let, so find out what this looks like:
       </div>
       <div class="widget">
         <select id="widgets-correctness" name="widgets.correctness:list" 
-                class="select-widget choice-field" size="1">
+                class="select-widget sequencechoice-field" size="1">
           <option id="widgets-correctness-novalue" value="--NOVALUE--" 
                   selected="selected">no value</option>
           <option id="widgets-correctness-0" value="c0">0 star</option>
@@ -82,7 +83,7 @@ Should be no problems let, so find out what this looks like:
       </div>
       <div class="widget">
         <select id="widgets-grading" name="widgets.grading:list" 
-                class="select-widget choice-field" size="1">
+                class="select-widget sequencechoice-field" size="1">
           <option id="widgets-grading-novalue" 
                   value="--NOVALUE--">no value</option>
           <option id="widgets-grading-0" value="c0" 
@@ -100,7 +101,7 @@ Should be no problems let, so find out what this looks like:
       </div>
       <div class="widget">
         <select id="widgets-status" name="widgets.status:list" 
-                class="select-widget choice-field" size="1">
+                class="select-widget sequencechoice-field" size="1">
           <option id="widgets-status-novalue" 
                   value="--NOVALUE--">no value</option>
           <option id="widgets-status-0" value="c0">0 star</option>
@@ -113,3 +114,6 @@ Should be no problems let, so find out what this looks like:
       </div>
       <input name="-empty-marker" type="hidden" value="1" />
     </div>
+
+Further tests needed on missing data, mismatch data (i.e. stored value
+that are no longer present within the defined ranges), and extra fields.

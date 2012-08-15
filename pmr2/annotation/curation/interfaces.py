@@ -113,6 +113,7 @@ class IBasicCurationSet(zope.interface.Interface):
     flags = BasicCurationDict(
         title=u'Curation Flags',
         description=u'Curation flags assigned to this object.',
+        required=False,
     )
 
 

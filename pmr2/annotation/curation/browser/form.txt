@@ -45,3 +45,64 @@ readily be selected by the end user.
     >>> request = TestRequest()
     >>> form = ExposureWizardForm(context, request)
     >>> result = form()
+    >>> 'annotate0.widgets.basic_curation.flags.widgets.correctness:list' in \
+    ...     result
+    True
+    >>> 'annotate0.widgets.basic_curation.flags-empty-marker' in result
+    True
+
+Attempt to assign some curation values.
+::
+
+    >>> request = TestRequest(
+    ...     form={
+    ...         'annotate0.widgets.filename': 'file2',
+    ...         'annotate0.widgets.basic_curation.flags-empty-marker': 1,
+    ...         'annotate0.widgets.basic_curation.flags.widgets.correctness':
+    ...             ['c1'],
+    ...         'annotate0.widgets.basic_curation.flags.widgets.status':
+    ...             ['c2'],
+    ...         'annotate0.buttons.update': 1,
+    ...     })
+    >>> form = ExposureWizardForm(context, request)
+    >>> result = form()
+    >>> print result
+
+Now find out how the wizard's structure have changed:
+::
+
+    >>> answer = [
+    ...     ('file2', {
+    ...         'file_type': '/plone/curation_type', 
+    ...         'views': [(u'basic_curation', {
+    ...             'flags': {
+    ...                 'status': ['c2'],
+    ...                 'correctness': ['c1'],
+    ...                 'grading': None
+    ...             }
+    ...         })], 
+    ...         'selected_view': None,
+    ...         'Subject': []}),
+    ...      ('', {
+    ...         'commit_id': u'2', 'title': u'', 'curation': {},
+    ...         'workspace': u'/plone/workspace/test',
+    ...         'docview_gensource': None, 'docview_generator': None,
+    ...         'Subject': ()})]
+    ... ]
+    >>> ewiz.structure == answer
+    True
+
+Render the form again, and it should have the curation flags selected.
+Make use of the testbrowser to ease this task.
+::
+
+    >>> b = self.testbrowser
+    >>> target = context.absolute_url() + '/@@wizard'
+    >>> b.open(target)
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.status:list').value
+    ['c2']
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.correctness:list').value
+    ['c1']
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.grading:list').value
+    ['--NOVALUE--']
+

@@ -16,6 +16,7 @@ from pmr2.app.factory import NamedUtilBase
 from pmr2.annotation.curation.interfaces import IMasterCurationFlag
 from pmr2.annotation.curation.interfaces import ICurationFlag
 from pmr2.annotation.curation.interfaces import ICurationTool
+from pmr2.annotation.curation.schema import SequenceChoice
 
 __all__ = [
     'CurationTool',
@@ -82,13 +83,15 @@ def buildSchemaInterface(flags, name=None,
     fields = {}
     for c, f in enumerate(sorted(flags.items())):
         k, v = f
-        fields[k] = zope.schema.Choice(
+        field = SequenceChoice(
             title=v.title,
             required=False,
             # XXX placeholder: this will NOT reflect the value
             vocabulary=_vocabulary,
         )
-        fields[k].order = c
+        field.order = c
+        fields[k] = field
+
     default.update(fields)
 
     # Incoming lion, get in the car.

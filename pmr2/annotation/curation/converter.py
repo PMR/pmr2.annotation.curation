@@ -1,19 +1,17 @@
 import zope.component
 
-import z3c.form.interfaces
-import z3c.form.converter
+from z3c.form.converter import BaseDataConverter
+from z3c.form.converter import CollectionSequenceDataConverter
+from z3c.form.interfaces import ISequenceWidget, ITextAreaWidget
 
-import pmr2.annotation.curation.schema.interfaces
+from pmr2.annotation.curation.schema import interfaces
 
 
-class CurationFlagDictDataConverter(z3c.form.converter.BaseDataConverter):
+class CurationFlagDictDataConverter(BaseDataConverter):
     """\
     Calls an accessor as a method to get the data within.
     """
-    zope.component.adapts(
-        pmr2.annotation.curation.schema.interfaces.ICurationFlagDict,
-        z3c.form.interfaces.ITextAreaWidget
-    )
+    zope.component.adapts(interfaces.ICurationFlagDict, ITextAreaWidget)
 
     def toWidgetValue(self, value):
         """\
@@ -41,3 +39,11 @@ class CurationFlagDictDataConverter(z3c.form.converter.BaseDataConverter):
         for i in items:
             result.extend(i)
         return u'\n'.join(result)
+
+
+class SequenceChoiceDataConverter(CollectionSequenceDataConverter):
+    """\
+    Apply the intended conversion class to the choice widget.
+    """
+
+    zope.component.adapts(interfaces.ISequenceChoice, ISequenceWidget)

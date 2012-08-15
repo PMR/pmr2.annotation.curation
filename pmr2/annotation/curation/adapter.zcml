@@ -7,5 +7,6 @@
 
   <!-- Widget value converters -->
   <adapter factory=".converter.CurationFlagDictDataConverter"/>
+  <adapter factory=".converter.SequenceChoiceDataConverter"/>
 
 </configure> 
