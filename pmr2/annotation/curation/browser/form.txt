@@ -106,3 +106,18 @@ Make use of the testbrowser to ease this task.
     >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.grading:list').value
     ['--NOVALUE--']
 
+Let's push the build button and see if we got the desired result.
+::
+
+    >>> request = TestRequest(form={
+    ...     'form.buttons.build': 1,
+    ... })
+    >>> form = ExposureWizardForm(context, request)
+    >>> form.update()
+    >>> note = zope.component.getAdapter(context.file2, name='basic_curation')
+    >>> note.flags == {
+    ...     'status': ['c2'],
+    ...     'correctness': ['c1'],
+    ...     'grading': None
+    ... }
+    True
