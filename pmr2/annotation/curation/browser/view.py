@@ -1,6 +1,8 @@
 import zope.component
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 
+from plone.z3cform import layout
+
 from pmr2.app.exposure.browser.browser import RawContentNote
 from pmr2.app.exposure.browser.browser import ExposureFileViewBase
 
@@ -24,3 +26,7 @@ class BasicCurationNote(ExposureFileViewBase):
                 'key': key,
                 'value': value,
             }
+
+# XXX need to get this needless boilerplate removed when pmr2.app
+# rectifies this situation.
+BasicCurationNoteView = layout.wrap_form(BasicCurationNote)
