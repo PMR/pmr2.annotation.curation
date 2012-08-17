@@ -31,7 +31,12 @@ The basic note annotation rendering.
       <dt>Model Curation</dt>
       <dd>
         <ul>
-          <li><span></span> <img src="http://nohost/plone/++resource++pmr2.app.images/c2.png" alt="c2" /></li>
+          <li>
+            <dl>
+              <dt>curation</dt>
+              <dd><img src="http://nohost/plone/++resource++pmr2.app.images/c2.png" alt="c2" /></dd>
+            </dl>
+          </li>
         </ul>
       </dd>
     </dl>
