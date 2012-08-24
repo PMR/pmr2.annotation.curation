@@ -27,7 +27,9 @@ The basic note annotation rendering.
     >>> form = view.BasicCurationNote(context, request)
     >>> form.__name__ = 'basic_curation'
     >>> print form()
-    <dl>
+    <h1 class="documentFirstHeading">file1</h1>
+    <div id="content-core">
+    <div><dl>
       <dt>Model Curation</dt>
       <dd>
         <ul>
@@ -40,3 +42,5 @@ The basic note annotation rendering.
         </ul>
       </dd>
     </dl>
+    </div>
+    </div>

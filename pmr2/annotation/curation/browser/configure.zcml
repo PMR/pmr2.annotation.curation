@@ -10,7 +10,7 @@
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="basic_curation"
-      class=".view.BasicCurationNoteView"
+      class=".view.BasicCurationNote"
       permission="zope2.View"
       />
 
@@ -18,21 +18,21 @@
   <browser:page
       for="*"
       name="manage-curation"
-      class=".manager.CurationToolDisplayFormView"
+      class=".manager.CurationToolDisplayForm"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       for="*"
       name="manage-add-curation-flag"
-      class=".manager.CurationFlagAddFormView"
+      class=".manager.CurationFlagAddForm"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       for="*"
       name="manage-edit-curation-flag"
-      class=".manager.CurationFlagEditFormView"
+      class=".manager.CurationFlagEditForm"
       permission="cmf.ManagePortal"
       />
   -->
@@ -46,7 +46,7 @@
       for="Products.Five.browser.adding.ContentAdding
            *"
       name="addCuration"
-      factory=".manager.CurationFlagAddFormView"
+      factory=".manager.CurationFlagAddForm"
       provides="z3c.form.interfaces.IAddForm"
       />
   -->
