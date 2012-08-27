@@ -106,6 +106,13 @@ Make use of the testbrowser to ease this task.
     >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.grading:list').value
     ['--NOVALUE--']
 
+Resubmitting this form directly should not cause an error.
+::
+
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.status:list').value = ['c1']
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.correctness:list').value = ['c2']
+    >>> b.getControl(name='annotate0.buttons.update').click()
+
 Let's push the build button and see if we got the desired result.
 ::
 
@@ -116,8 +123,8 @@ Let's push the build button and see if we got the desired result.
     >>> form.update()
     >>> note = zope.component.getAdapter(context.file2, name='basic_curation')
     >>> note.flags == {
-    ...     'status': ['c2'],
-    ...     'correctness': ['c1'],
-    ...     'grading': None
+    ...     'status': ['c1'],
+    ...     'correctness': ['c2'],
+    ...     'grading': [],
     ... }
     True
