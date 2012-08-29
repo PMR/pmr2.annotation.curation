@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<portlets>
+
+ <portlet 
+     addview="pmr2.portlets.basic_curation"
+     title="Basic Curation Display"
+     description="This portlet displays basic curation information attached to a particular exposure file, if available.">
+ </portlet>
+
+</portlets>

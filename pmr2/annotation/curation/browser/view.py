@@ -21,7 +21,8 @@ class BasicCurationNote(ExposureFileViewBase):
             # XXX this can be None, workaround
             if key is None:
                 key = type('DummyFlag', (object,), {'title': k})
-            value = v and v[0] or '0'
+            # XXX empty value not omitted?
+            value = v and v[0] or 'c0'
             yield {
                 'key': key,
                 'value': value,
