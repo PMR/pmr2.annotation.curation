@@ -2,6 +2,7 @@ from zope import schema
 from zope.formlib import form
 from zope.interface import implements
 import zope.component
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 
 from plone.app.portlets.portlets import base
 from plone.portlets.interfaces import IPortletDataProvider
@@ -58,6 +59,8 @@ class Assignment(base.Assignment):
 
 class Renderer(base.Renderer, BasicCurationNote):
 
+    index = ViewPageTemplateFile('portlet_core.pt')
+
     def __init__(self, *a, **kw):
         base.Renderer.__init__(self, *a, **kw)
         self.title = _(u'Model Curation')
@@ -68,7 +71,7 @@ class Renderer(base.Renderer, BasicCurationNote):
 
     def render(self):
         if self.available:
-            return BasicCurationNote.template(self)
+            return BasicCurationNote.render(self)
 
     @property
     def note(self):
