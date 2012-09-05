@@ -9,7 +9,6 @@ from zope.publisher.interfaces import NotFound
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('pmr2.annotation.curation')
 
-from plone.z3cform import layout
 from plone.memoize.view import memoize
 import z3c.form
 
@@ -25,7 +24,6 @@ from pmr2.annotation.curation.flag import CurationFlag
 from pmr2.annotation.curation.browser.templates import path
 
 from pmr2.annotation.curation.browser.interfaces import *
-from pmr2.annotation.curation.browser.layout import TraverseFormWrapper
 
 
 class CurationToolDisplayForm(z3c.form.form.DisplayForm):
