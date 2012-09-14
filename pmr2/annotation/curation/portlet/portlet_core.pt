@@ -11,6 +11,10 @@
             />
       </li>
     </ul>
+    <p tal:condition="view/data/curator_uri">
+      <a tal:attributes="href view/data/curator_uri"
+          tal:content="view/data/contact_label"></a>
+    </p>
   </dd>
 </dl>
 
