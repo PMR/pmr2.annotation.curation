@@ -15,18 +15,35 @@ imports we will need.
 Views
 -----
 
-The basic note annotation rendering.
+The basic note annotation rendering.  Render this without properly 
+setting the data in the note.
 ::
 
     >>> from pmr2.testing.base import TestRequest
     >>> tool = getUtility(ICurationTool)
     >>> context = self.portal.exposure['1'].file1
+    >>> request = TestRequest()
+    >>> page = view.BasicCurationNote(context, request)
+    >>> page.__name__ = 'basic_curation'
+    >>> print page()
+    <h1 class="documentFirstHeading">file1</h1>
+    <div id="content-core">
+    <div><dl>
+      <dt>Model Curation</dt>
+      <dd>
+        <ul>
+        </ul>
+      </dd>
+    </dl>
+    </div>
+    </div>
+
+Now define some data.
+::
+
     >>> note = zope.component.queryAdapter(context, name='basic_curation')
     >>> note.flags = {'curation': ['c2']}
-    >>> request = TestRequest()
-    >>> form = view.BasicCurationNote(context, request)
-    >>> form.__name__ = 'basic_curation'
-    >>> print form()
+    >>> print page()
     <h1 class="documentFirstHeading">file1</h1>
     <div id="content-core">
     <div><dl>

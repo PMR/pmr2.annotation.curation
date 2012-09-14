@@ -16,7 +16,9 @@ class BasicCurationNote(ExposureFileViewBase):
 
     def items(self):
         curation = zope.component.getUtility(ICurationTool)
-        for k, v in self.note.flags.iteritems():
+        # Flags could be None...
+        flags = self.note.flags or {}
+        for k, v in flags.iteritems():
             key = curation.getFlag(k)
             # XXX this can be None, workaround
             if key is None:
