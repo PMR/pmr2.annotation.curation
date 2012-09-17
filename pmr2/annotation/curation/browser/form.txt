@@ -99,28 +99,43 @@ Make use of the testbrowser to ease this task.
     >>> b = self.testbrowser
     >>> target = context.absolute_url() + '/@@wizard'
     >>> b.open(target)
-    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.status:list').value
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.'
+    ...                   'status:list').value
     ['c2']
-    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.correctness:list').value
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.'
+    ...                   'correctness:list').value
     ['c1']
-    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.grading:list').value
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.'
+    ...                   'grading:list').value
     ['--NOVALUE--']
 
 Resubmitting this form directly should not cause an error.
 ::
 
-    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.status:list').value = ['c1']
-    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.correctness:list').value = ['c2']
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.'
+    ...                   'status:list').value = ['c1']
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.'
+    ...                   'correctness:list').value = ['c2']
     >>> b.getControl(name='annotate0.buttons.update').click()
+
+Validate that the values have been changed.
+::
+
+    >>> b.open(target)
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.'
+    ...                   'status:list').value
+    ['c1']
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.'
+    ...                   'correctness:list').value
+    ['c2']
+    >>> b.getControl(name='annotate0.widgets.basic_curation.flags.widgets.'
+    ...                   'grading:list').value
+    ['--NOVALUE--']
 
 Let's push the build button and see if we got the desired result.
 ::
 
-    >>> request = TestRequest(form={
-    ...     'form.buttons.build': 1,
-    ... })
-    >>> form = ExposureWizardForm(context, request)
-    >>> form.update()
+    >>> b.getControl(name='form.buttons.build').click()
     >>> note = zope.component.getAdapter(context.file2, name='basic_curation')
     >>> note.flags == {
     ...     'status': ['c1'],
