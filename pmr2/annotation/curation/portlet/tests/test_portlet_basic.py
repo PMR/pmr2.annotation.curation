@@ -100,7 +100,7 @@ class TestRenderer(CompleteDocTestCase):
         self.assertTrue(output is not None)
         self.assertTrue('Curation Status' in output)
         self.assertTrue('Grading' in output)
-        self.assertTrue('Correctness' in output)
+        self.assertFalse('Correctness' in output)
 
 
 def test_suite():

@@ -20,12 +20,14 @@ class BasicCurationNote(ExposureFileViewBase):
         flags = self.note.flags or {}
         for k, v in flags.iteritems():
             key = curation.getFlag(k)
+
             # XXX this can be None, workaround
             if key is None:
                 key = type('DummyFlag', (object,), {'title': k})
-            # XXX empty value not omitted?
-            value = v and v[0] or 'c0'
-            yield {
-                'key': key,
-                'value': value,
-            }
+
+            if v:
+                value = v[0]
+                yield {
+                    'key': key,
+                    'value': value,
+                }
