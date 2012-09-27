@@ -1,12 +1,8 @@
 import unittest
+import doctest
 
-from zope.testing import doctestunit, doctest
 from zope.component import testing
 from Testing import ZopeTestCase as ztc
-
-from Products.PloneTestCase import PloneTestCase as ptc
-from Products.PloneTestCase.layer import PloneSite
-from Products.PloneTestCase.layer import onsetup
 
 from pmr2.annotation.curation.tests import base
 
@@ -14,12 +10,12 @@ from pmr2.annotation.curation.tests import base
 def test_suite():
     return unittest.TestSuite([
 
-        doctestunit.DocTestSuite(
+        doctest.DocTestSuite(
             module='pmr2.annotation.curation.schema.field',
             setUp=testing.setUp, tearDown=testing.tearDown
         ),
 
-        doctestunit.DocTestSuite(
+        doctest.DocTestSuite(
             module='pmr2.annotation.curation.converter',
             setUp=testing.setUp, tearDown=testing.tearDown
         ),

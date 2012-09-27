@@ -1,22 +1,11 @@
-from os.path import dirname, join
-import tempfile
-import shutil
-import unittest
-
-from zope.testing import doctestunit, doctest
-from zope.component import testing
-
 import zope.interface
 import zope.component
-from zope.annotation import IAnnotations
-import z3c.form.testing
 
 from Zope2.App import zcml
 from Testing import ZopeTestCase as ztc
 
 from Products.Five import fiveconfigure
 from Products.PloneTestCase import PloneTestCase as ptc
-from Products.PloneTestCase.layer import PloneSite
 from Products.PloneTestCase.layer import onsetup, onteardown
 
 from pmr2.app.exposure.tests import base

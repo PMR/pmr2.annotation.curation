@@ -1,7 +1,6 @@
 from unittest import TestSuite, makeSuite
 
 import zope.component
-from zope.schema.interfaces import IVocabularyFactory
 
 from pmr2.annotation.curation.interfaces import ICurationTool
 from pmr2.annotation.curation.tests.base import TestCase
