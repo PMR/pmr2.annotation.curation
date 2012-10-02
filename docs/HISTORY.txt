@@ -1,8 +1,11 @@
 Changelog
 =========
 
-trunk - Unreleased
-----------------
+0.1 - Released (2012-09-02)
+---------------------------
 
-* Initial release
+* Initial release of the curation annotation extension for PMR2.  Basic
+  features provided are:
 
+  - Foundation for the curation flag framework
+  - Core curation master flags usable by curators.
