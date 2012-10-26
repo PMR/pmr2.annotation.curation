@@ -18,6 +18,7 @@ Here we first set up the environment.
     >>> from pmr2.app.exposure.browser.browser import ExposureFileNoteEditForm
     >>> from pmr2.app.exposure.browser.wizard import ExposureWizardForm
     >>> from pmr2.app.exposure.interfaces import IExposureWizard
+    >>> self.markLayer()
     >>> context = self.portal.exposure['1']
     >>> ewiz = zope.component.getAdapter(context, IExposureWizard)
 
