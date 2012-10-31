@@ -51,20 +51,6 @@
       />
   -->
 
-  <!-- bug fix/workarounds -->
-
-  <!--
-    this is for specifically forms with traverse subpaths, where the
-    default supplied with plone.z3cform does not take account of.
-  -->
-  <browser:page
-      name="ploneform-macros"
-      for="*"
-      layer="pmr2.annotation.curation.interfaces.ICurationLayer"
-      class="pmr2.app.browser.templates.Macros"
-      allowed_interface="zope.interface.common.mapping.IItemMapping"
-      permission="zope.Public" />
-
   <!--
     Resource declarations.
   -->
