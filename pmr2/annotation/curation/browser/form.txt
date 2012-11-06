@@ -175,3 +175,30 @@ all the unicode is reverted back into strings.
     ...     'grading': [],
     ... }
     True
+
+We can have a situation where we import curation flags from an external
+repository with flags that are not defined here.  Emulate this situation
+here with a mixture of missing flags and unknown flags.
+::
+
+    >>> ewiz.structure[0][1]['views'][0][1]['flags'] = {
+    ...     u'power': [u'aa', u'bb'],
+    ...     u'correctness': [u'c1'],
+    ...     u'grading': [u'c6'],
+    ... }
+
+Now try to see what would happen if we just apply the update.
+::
+
+    >>> b.open(target)
+    >>> b.getControl(name='annotate0.buttons.update').click()
+    >>> 'Wrong contained type' in b.contents
+    False
+    >>> sorted(ewiz.structure[0][1]['views'][0][1]['flags'].items())
+    [('correctness', ['c1']), ('grading', []), ('power', ['aa', 'bb']), 
+    ('status', [])]
+
+Basically any flags that do not exist at all in a given repository will 
+be untouched, and any flags that share the same id will be modified with
+the new set of flag values.  This may be an issue that will need to be
+addressed in the future.
