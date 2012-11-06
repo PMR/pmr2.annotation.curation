@@ -177,6 +177,25 @@ all the unicode is reverted back into strings.
     ... }
     True
 
+Users may note that the flags are already correct and hit build right
+away.  This should not result in any errors also.
+::
+
+    >>> ewiz.structure[0][1]['views'][0][1]['flags'] = {
+    ...     u'status': [u'c3'],
+    ...     u'correctness': [u'c2'],
+    ...     u'grading': None
+    ... }
+    >>> b.open(target)
+    >>> b.getControl(name='form.buttons.build').click()
+    >>> note = zope.component.getAdapter(context.file2, name='basic_curation')
+    >>> note.flags == {
+    ...     'status': ['c3'],
+    ...     'correctness': ['c2'],
+    ...     'grading': [],
+    ... }
+    True
+
 We can have a situation where we import curation flags from an external
 repository with flags that are not defined here.  Emulate this situation
 here with a mixture of missing flags and unknown flags.
