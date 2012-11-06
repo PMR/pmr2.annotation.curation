@@ -23,6 +23,7 @@ from pmr2.annotation.curation.browser.widget.interfaces import \
 
 from pmr2.annotation.curation.interfaces import ICurationTool
 from pmr2.annotation.curation.tool import buildSchemaInterface
+from pmr2.annotation.curation.util import scrub_json_unicode_to_string
 
 
 # Object based widget and support classes.
@@ -128,7 +129,7 @@ class CurationFlagListConverter(BaseDataConverter):
 
         # XXX workaround for JSON import
         try:
-            obj = self._sanitize(obj)
+            obj = scrub_json_unicode_to_string(obj)
         except:
             # Not really our problem... although it will be nice if
             # we can reset this and then notify end user.
@@ -139,23 +140,6 @@ class CurationFlagListConverter(BaseDataConverter):
                 zope.lifecycleevent.ObjectModifiedEvent(obj,
                     zope.lifecycleevent.Attributes(self.schema, *names)))
         return obj
-
-    def _sanitize(self, obj):
-        # helper method to sanitize accidental JSON unicode
-        new_obj = {}
-        for k, values in obj.iteritems():
-            key = str(k)
-            if values is None:
-                new_obj[key] = None
-                continue
-
-            new_values = []
-            for v in values:
-                if v:
-                    new_values.append(str(v))
-
-            new_obj[key] = new_values
-        return new_obj
 
 
 class CurationFlagListWidget(ObjectWidget):
