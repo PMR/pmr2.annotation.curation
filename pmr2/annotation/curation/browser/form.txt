@@ -143,3 +143,35 @@ Let's push the build button and see if we got the desired result.
     ...     'grading': [],
     ... }
     True
+
+-----------
+JSON Import
+-----------
+
+A user may have this imported via the JSON import form.  This will cause
+the strict type checking to fail if that's not addressed as all values
+will become unicode, which isn't a DottedValue.  To test that this will
+not be a cause of error, we simulate this by setting the note with 
+the wrong kind of values.
+::
+
+    >>> ewiz.structure[0][1]['views'][0][1]['flags'] = {
+    ...     u'status': [u'c2'],
+    ...     u'correctness': [u'c1'],
+    ...     u'grading': None
+    ... }
+
+See that we can activate the update button without issues, and note that
+all the unicode is reverted back into strings.
+::
+
+    >>> b.open(target)
+    >>> b.getControl(name='annotate0.buttons.update').click()
+    >>> 'Wrong contained type' in b.contents
+    False
+    >>> ewiz.structure[0][1]['views'][0][1]['flags'] == {
+    ...     'status': ['c2'],
+    ...     'correctness': ['c1'],
+    ...     'grading': [],
+    ... }
+    True
