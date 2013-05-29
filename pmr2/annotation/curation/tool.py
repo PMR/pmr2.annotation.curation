@@ -2,8 +2,8 @@ import new
 
 from persistent import Persistent
 from zope.annotation import factory, IAttributeAnnotatable
-from zope.app.container.contained import Contained
-from zope.app.component.hooks import getSite, getSiteManager
+from zope.container.contained import Contained
+from zope.component.hooks import getSite, getSiteManager
 import zope.schema
 import zope.interface
 import zope.component

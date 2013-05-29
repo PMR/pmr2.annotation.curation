@@ -1,8 +1,8 @@
 import zope.interface
 import zope.component
 
-from zope.app.component.hooks import getSite
-from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+from zope.component.hooks import getSite
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces import NotFound
 
