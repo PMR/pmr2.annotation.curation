@@ -19,15 +19,16 @@ from z3c.form.browser import widget
 
 from pmr2.annotation.curation.schema.interfaces import IBasicCurationDict
 from pmr2.annotation.curation.browser.widget.interfaces import \
-    ICurationFlagListWidget
+    ICurationFlagListWidget, ICurationFlagListSubForm
 
-from pmr2.annotation.curation.interfaces import ICurationTool
+from pmr2.annotation.curation.interfaces import ICurationTool, ICurationLayer
 from pmr2.annotation.curation.tool import buildSchemaInterface
 from pmr2.annotation.curation.util import scrub_json_unicode_to_string
 
 
 # Object based widget and support classes.
 
+@zope.interface.implementer(ICurationFlagListSubForm)
 class CurationFlagListSubForm(ObjectSubForm):
 
     def setupFields(self):
@@ -184,8 +185,15 @@ class CurationFlagListWidget(ObjectWidget):
             # ensure that we apply our new values to the widgets
             if value is not NO_VALUE:
                 for name in zope.schema.getFieldNames(self.schema):
-                    self.applyValue(self.subform.widgets[name],
-                                    value.get(name, NO_VALUE))
+                    # XXX z3c.form-3.0 CollectionSequenceDataConverter
+                    # will try to iterate through a NO_VALUE, which will
+                    # diaf.  Hack to workaround this without YET another
+                    # bloated pile of adapters because defaults are not
+                    # sane.
+                    v = value.get(name, NO_VALUE)
+                    if v is NO_VALUE:
+                        v = self.subform.widgets[name].field.missing_value
+                    self.applyValue(self.subform.widgets[name], v)
 
         return property(get, set)
 

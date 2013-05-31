@@ -1,6 +1,7 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:z3c="http://namespaces.zope.org/z3c"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="z3c.form">
 
   <class class=".curationflaglist.CurationFlagListWidget">
@@ -29,6 +30,22 @@
   <adapter
       factory=".curationflaglist.CurationFlagListSubformAdapter"
       />
+
+  <configure zcml:condition="installed plone.app.z3cform"> 
+
+      <!-- these overrides are kind of stupid -->
+
+      <adapter
+          factory=".curationflaglist.CurationFlagListSubformAdapter"
+          for="zope.interface.Interface
+               plone.app.z3cform.interfaces.IPloneFormLayer
+               zope.interface.Interface
+               zope.interface.Interface
+               .interfaces.ICurationFlagListWidget
+               zope.interface.Interface
+               zope.interface.Interface" />
+
+  </configure>
 
   <adapter
       factory=".curationflaglist.CurationFlagListConverter"

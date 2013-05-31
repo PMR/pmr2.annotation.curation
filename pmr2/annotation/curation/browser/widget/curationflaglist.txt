@@ -88,7 +88,7 @@ Should be no problems there, so find out what this looks like:
         <select id="widgets-correctness" name="widgets.correctness:list" 
                 class="select-widget sequencechoice-field" size="1">
           <option id="widgets-correctness-novalue" value="--NOVALUE--" 
-                  selected="selected">no value</option>
+                  selected="selected">No value</option>
           <option id="widgets-correctness-0" value="c0">0 star</option>
           <option id="widgets-correctness-1" value="c1">1 star</option>
           <option id="widgets-correctness-2" value="c2">2 star</option>
@@ -106,7 +106,7 @@ Should be no problems there, so find out what this looks like:
         <select id="widgets-grading" name="widgets.grading:list" 
                 class="select-widget sequencechoice-field" size="1">
           <option id="widgets-grading-novalue" 
-                  value="--NOVALUE--">no value</option>
+                  value="--NOVALUE--">No value</option>
           <option id="widgets-grading-0" value="c0" 
                   selected="selected">0 star</option>
           <option id="widgets-grading-1" value="c1">1 star</option>
@@ -124,7 +124,7 @@ Should be no problems there, so find out what this looks like:
         <select id="widgets-status" name="widgets.status:list" 
                 class="select-widget sequencechoice-field" size="1">
           <option id="widgets-status-novalue" 
-                  value="--NOVALUE--">no value</option>
+                  value="--NOVALUE--">No value</option>
           <option id="widgets-status-0" value="c0">0 star</option>
           <option id="widgets-status-1" value="c1" 
                   selected="selected">1 star</option>

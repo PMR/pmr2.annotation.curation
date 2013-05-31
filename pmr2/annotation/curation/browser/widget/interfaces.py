@@ -1,3 +1,4 @@
+from z3c.form.interfaces import ISubForm
 from z3c.form.interfaces import ITextAreaWidget
 from z3c.form.interfaces import IMultiWidget
 from z3c.form.interfaces import IObjectWidget
@@ -13,3 +14,7 @@ class ICurationFlagDictWidget(ITextAreaWidget):
 
 class ICurationFlagListWidget(IObjectWidget):
     """Curation Flag List Select Widget."""
+
+
+class ICurationFlagListSubForm(ISubForm):
+    """Subform interface"""
