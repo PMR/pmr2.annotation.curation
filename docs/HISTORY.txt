@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2 - Released (2013-07-08)
+---------------------------
+
+* Compatibility fix for z3c.form-3.x; mostly workarounds.
+
 0.1.1 - Released (2012-11-06)
 -----------------------------
 
