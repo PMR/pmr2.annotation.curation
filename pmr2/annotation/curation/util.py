@@ -1,5 +1,7 @@
 def scrub_json_unicode_to_string(obj):
     # helper method to turn the unicode into string for a json import.
+    if obj is None:
+        return None
     new_obj = {}
     for k, values in obj.iteritems():
         key = str(k)
