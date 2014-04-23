@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.2.2 - Released (2014-04-23)
+-----------------------------
+
+* Fix for CurationFlagList fallback value to ensure it matches correct
+  default value.
+
 0.2.1 - Released (2013-07-10)
 -----------------------------
 
