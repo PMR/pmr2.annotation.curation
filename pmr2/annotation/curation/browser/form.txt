@@ -75,6 +75,7 @@ Now find out how the wizard's structure have changed:
     >>> answer = [
     ...     ('file2', {
     ...         'file_type': '/plone/curation_type', 
+    ...         'hidden_views': [],
     ...         'views': [(u'basic_curation', {
     ...             'flags': {
     ...                 'status': ['c2'],
