@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2.3 - Released (2015-03-18)
+-----------------------------
+
+* Fix test case to match the output in pmr2.app-0.10
+
 0.2.2 - Released (2014-04-23)
 -----------------------------
 
