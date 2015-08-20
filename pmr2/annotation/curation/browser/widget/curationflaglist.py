@@ -33,7 +33,8 @@ class CurationFlagListSubForm(ObjectSubForm):
 
     def setupFields(self):
         # should provide method or something
-        ct = zope.component.getUtility(ICurationTool)
+        ct = zope.component.queryUtility(ICurationTool)
+        flags = ct is not None and ct.all_flags or {}
         schema = buildSchemaInterface(ct.all_flags)
         self.fields = Fields(schema)
 
