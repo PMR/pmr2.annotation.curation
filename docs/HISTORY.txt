@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2.4 - Released (2016-03-08)
+-----------------------------
+
+* Do not fail if tool wasn't initialized for whatever reason.
+
 0.2.3 - Released (2015-03-18)
 -----------------------------
 
